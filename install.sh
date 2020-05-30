@@ -9,8 +9,8 @@ fi
 if [ $1 = "arch" ]; then
 	sh $HOME/dotfiles/OS/arch.sh
 elif [ $1 = "ubuntu" ]; then
-	echo "not implement error" 1>&2
-	exit 1
+	# echo "not implement error" 1>&2
+	# exit 1
 fi
 
 sh $HOME/dotfiles/dotfilesDepends.sh
