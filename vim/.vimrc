@@ -87,9 +87,9 @@ augroup END
 
 set background=dark
 
-try
-    colorscheme cherryblossom
-endtry
+"try
+"    colorscheme cherryblossom
+"endtry
 
 "snippet
 let g:UltiSnipsExpandTrigger="<tab>"
