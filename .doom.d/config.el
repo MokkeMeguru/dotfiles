@@ -123,3 +123,18 @@
 (define-key evil-normal-state-map "\C-r" 'undo-fu-only-redo)
 
 (global-undo-tree-mode)
+
+(use-package dap-mode
+  :config
+  (dap-mode 1)
+  (require 'dap-mode)
+  (require 'dap-go)
+  (require 'dap-python)
+  (require 'dap-gdb-lldb)
+  (require 'dap-hydra)
+  (add-hook 'dap-stopped-hook
+            (lambda (arg) (call-interactively #'dap-hydra)))
+  (use-package dap-ui
+    :ensure nil
+    :config
+    (dap-ui-mode 1)))

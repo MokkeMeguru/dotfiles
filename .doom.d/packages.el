@@ -58,3 +58,4 @@
 (package! yasnippet-snippets)
 (package! doom-themes)
 (package! undo-fu)
+(package! dap-mode)
