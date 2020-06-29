@@ -66,6 +66,12 @@ if executable('pyls')
         \ 'name': 'pyls',
         \ 'cmd': {server_info->['pyls']},
         \ 'whitelist': ['python'],
+	    \ 'workspace_config' : {
+        \   'pyls' : {
+        \     'plugins' : {
+        \        'ignore' : [
+	    \           "E501"
+	    \        ]}}}
         \ })
 endif
 
