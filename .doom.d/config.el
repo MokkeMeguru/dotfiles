@@ -58,9 +58,17 @@
 (defun google-translate--search-tkk () "Search TKK." (list 430675 2721866130))
 (setq google-translate-default-source-language "en")
 (setq google-translate-default-target-language "ja")
+(defun google-translate-json-suggestion (json)
+  "Retrieve from JSON (which returns by the
+`google-translate-request' function) suggestion. This function
+does matter when translating misspelled word. So instead of
+translation it is possible to get suggestion."
+  (let ((info (aref json 7)))
+    (if (and info (> (length info) 0))
+        (aref info 1)
+      nil)))
 
-
- ;; org mode
+;; org mode
 (require 'ox)
 (require 'ox-latex)
 (require 'org-ref)
@@ -72,55 +80,57 @@
 (setq org-latex-listings 'minted)
 (add-to-list 'org-latex-packages-alist '("" "minted"))
 (setq org-latex-minted-options
-'(("frame" "lines") ("linenos=true")))
+      '(("frame" "lines") ("linenos=true")))
 
 
 (org-babel-do-load-languages 'org-babel-load-languages
- '((shell . t)
- (python . t)
- (emacs-lisp . t)
- (latex . t)
- (R . t)
- (stan . t)))
+                             '((shell . t)
+                               (python . t)
+                               (emacs-lisp . t)
+                               (latex . t)
+                               (R . t)
+                               (stan . t)))
 
 (setq org-preview-latex-process-alist
-       (quote
+      (quote
        ((dvipng :programs
-         ("lualatex" "dvipng")
-         :description "dvi > png" :message "you need to install the programs: latex and dvipng." :image-input-type "dvi" :image-output-type "png" :image-size-adjust
-         (1.0 . 1.0)
-         :latex-compiler
-         ("lualatex -output-format dvi -interaction nonstopmode -output-directory %o %f")
-         :image-converter
-         ("dvipng -fg %F -bg %B -D %D -T tight -o %O %f"))
- (dvisvgm :programs
-          ("latex" "dvisvgm")
-          :description "dvi > svg" :message "you need to install the programs: latex and dvisvgm." :use-xcolor t :image-input-type "xdv" :image-output-type "svg" :image-size-adjust
-          (1.7 . 1.5)
-          :latex-compiler
-          ("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
-          :image-converter
-          ("dvisvgm %f -n -b min -c %S -o %O"))
- (imagemagick :programs
-              ("latex" "convert")
-              :description "pdf > png" :message "you need to install the programs: latex and imagemagick." :use-xcolor t :image-input-type "pdf" :image-output-type "png" :image-size-adjust
-              (1.0 . 1.0)
-              :latex-compiler
-              ("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
-              :image-converter
-              ("convert -density %D -trim -antialias %f -quality 100 %O")))))
+                ("lualatex" "dvipng")
+                :description "dvi > png" :message "you need to install the programs: latex and dvipng." :image-input-type "dvi" :image-output-type "png" :image-size-adjust
+                (1.0 . 1.0)
+                :latex-compiler
+                ("lualatex -output-format dvi -interaction nonstopmode -output-directory %o %f")
+                :image-converter
+                ("dvipng -fg %F -bg %B -D %D -T tight -o %O %f"))
+        (dvisvgm :programs
+                 ("latex" "dvisvgm")
+                 :description "dvi > svg" :message "you need to install the programs: latex and dvisvgm." :use-xcolor t :image-input-type "xdv" :image-output-type "svg" :image-size-adjust
+                 (1.7 . 1.5)
+                 :latex-compiler
+                 ("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
+                 :image-converter
+                 ("dvisvgm %f -n -b min -c %S -o %O"))
+        (imagemagick :programs
+                     ("latex" "convert")
+                     :description "pdf > png" :message "you need to install the programs: latex and imagemagick." :use-xcolor t :image-input-type "pdf" :image-output-type "png" :image-size-adjust
+                     (1.0 . 1.0)
+                     :latex-compiler
+                     ("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
+                     :image-converter
+                     ("convert -density %D -trim -antialias %f -quality 100 %O")))))
 
 (setq org-latex-pdf-process
-'("platex --shell-escape --kanji=utf-8 %f"
-"platex --shell-escape --kanji=utf-8 %f"
-"bibtex %b"
-;; "biber %b"
-"platex --shell-escape--kanji=utf-8 %f"
-"platex --shell-escape--kanji=utf-8 %f"
-"platex --shell-escape--kanji=utf-8 %f"
-"dvipdfmx %b.dvi"))
+      '("platex --shell-escape --kanji=utf-8 %f"
+        "platex --shell-escape --kanji=utf-8 %f"
+        "bibtex %b"
+        ;; "biber %b"
+        "platex --shell-escape--kanji=utf-8 %f"
+        "platex --shell-escape--kanji=utf-8 %f"
+        "platex --shell-escape--kanji=utf-8 %f"
+        "dvipdfmx %b.dvi"))
 
 (setq org-latex-create-formula-image-program 'dvisvgm)
+
+(setq org-latex-caption-above (list 'table))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -173,15 +183,16 @@ as the pyenv version then also return nil. This works around https://github.com/
       (let
           ((pipenv-string (shell-command-to-string (concat "pipenv run which " command))))
         (string-trim pipenv-string))
-      (executable-find command)))
+    (executable-find command)))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(org-latex-caption-above nil)
  '(package-selected-packages
    (quote
-    (python-black grip-mode forge transient company-jedi yasnippet-snippets php-mode org-ref evil-tutor-ja doom-themes dap-mode)))
+    (google-translate python-black grip-mode forge transient company-jedi yasnippet-snippets php-mode org-ref evil-tutor-ja doom-themes dap-mode)))
  '(safe-local-variable-values
    (quote
     ((cider-default-cljs-repl . shadow)
@@ -324,3 +335,10 @@ keyword.
   :after python
   :config
   (python-black-on-save-mode))
+
+(setq exec-path (append '("/home/meguru/go/bin") exec-path))
+(setq lsp-gopls-codelens nil)
+(lsp-register-custom-settings
+ '(("gopls.completeUnimported" t t)
+   ("gopls.staticcheck" t t)))
+(put 'customize-variable 'disabled nil)
