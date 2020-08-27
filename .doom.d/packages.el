@@ -59,3 +59,4 @@
 (package! undo-fu)
 (package! dap-mode)
 (package! python-black)
+(package! exec-path-from-shell)
