@@ -83,6 +83,13 @@ translation it is possible to get suggestion."
       '(("frame" "lines") ("linenos=true")))
 
 
+(add-to-list 'org-latex-classes
+             '("extarticle"
+               "\\documentclass{extarticle}"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
+
 (org-babel-do-load-languages 'org-babel-load-languages
                              '((shell . t)
                                (python . t)
@@ -145,7 +152,7 @@ translation it is possible to get suggestion."
 (require 'yasnippet)
 (require 'yasnippet-snippets)
 
-(setq-default evil-escape-key-sequence "jj")
+(setq-default evil-escape-key-sequence "jk")
 (setq org-log-done 'time)
 (setq evil-disable-insert-state-bindings t)
 (global-set-key (kbd "C-e") 'move-end-of-line)
@@ -189,14 +196,15 @@ as the pyenv version then also return nil. This works around https://github.com/
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(org-agenda-files
+   '("~/Documents/compress-transformer/compress-transformer[inlg]-re.org" "/home/meguru/org/daily/2020-08-12.org" "/home/meguru/org/todo/2020-6-29.org" "/home/meguru/org/todo/2020-7-1.org" "/home/meguru/org/todo/2020-7-2.org" "/home/meguru/org/notes.org" "/home/meguru/org/todo.org"))
  '(org-latex-caption-above nil)
  '(package-selected-packages
-   (quote
-    (google-translate python-black grip-mode forge transient company-jedi yasnippet-snippets php-mode org-ref evil-tutor-ja doom-themes dap-mode)))
+   '(elpy poetry virtualenv google-translate python-black grip-mode forge transient company-jedi yasnippet-snippets php-mode org-ref evil-tutor-ja doom-themes dap-mode))
  '(safe-local-variable-values
-   (quote
-    ((cider-default-cljs-repl . shadow)
-     (cider-shadow-cljs-default-options . "app")))))
+   '((eval bibtex-set-dialect 'biblatex)
+     (cider-default-cljs-repl . shadow)
+     (cider-shadow-cljs-default-options . "app"))))
 
 
 (require 'magit)
@@ -342,3 +350,4 @@ keyword.
  '(("gopls.completeUnimported" t t)
    ("gopls.staticcheck" t t)))
 (put 'customize-variable 'disabled nil)
+(put 'upcase-region 'disabled nil)

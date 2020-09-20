@@ -59,3 +59,5 @@
 (package! undo-fu)
 (package! dap-mode)
 (package! python-black)
+(package! poetry)
+(package! elpy)
