@@ -61,3 +61,4 @@
 (package! python-black)
 (package! poetry)
 (package! elpy)
+(package! exec-path-from-shell)
