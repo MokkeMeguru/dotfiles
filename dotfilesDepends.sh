@@ -28,7 +28,9 @@ if !(type "bb" > /dev/null 2>&1); then
 	if [ ! -d $HOME/.bbsk ]; then
 		mkdir $HOME/.bbsk
 	fi
-	bash < <(curl -s https://raw.githubusercontent.com/babashka/babashka/master/install) $HOME/.bbsk/
+	curl -sLO https://raw.githubusercontent.com/babashka/babashka/master/install
+	chmod +x install
+	./install $HOME/.bbsk
 fi
 
 echo "install pyenv"
