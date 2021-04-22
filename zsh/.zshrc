@@ -6,7 +6,31 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 #!/bin/zsh
-source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+# source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+source "${ZDOTDIR:-$HOME}/.zplug/init.zsh"
+# utils
+zplug "zsh-users/zsh-history-substring-search"
+zplug "plugins/git",   from:oh-my-zsh
+zplug "lib/clipboard", from:oh-my-zsh, if:"[[ $OSTYPE == *darwin* ]]"
+zplug "stedolan/jq", \
+    from:gh-r, \
+    as:command, \
+    rename-to:jq
+zplug "b4b4r07/emoji-cli", \
+    on:"stedolan/jq"
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+
+# theme
+zplug "modules/osx", from:prezto, if:"[[ $OSTYPE == *darwin* ]]"
+zplug "modules/prompt", from:prezto
+zstyle ':prezto:module:prompt' theme 'powerlevel10x'
+
+if ! zplug check --verbose; then
+  echo; zplug install
+fi
+
+# コマンドをリンクして、PATH に追加し、プラグインは読み込む
+zplug load --verbose
 
 alias cp="cp -i"                          # confirm before overwriting something
 alias df='df -h'                          # human-readable sizes

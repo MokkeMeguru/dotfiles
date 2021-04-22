@@ -1,21 +1,26 @@
 #!/bin/sh
 
-# vim
-if [ $1 = "simple" ]; then
-    ln -snf ~/dotfiles/vim/.vimrc_simple ~/.vimrc
-else
-    ln -snf ~/dotfiles/vim/.vimrc ~/.vimrc 
+# bash
+if [ $1 = "w_bash" ]; then
+    
+    ln -sf $HOME/dotfiles/.bashrc $HOME/.bashrc
+    ln -sf $HOME/dotfiles/.bash_profile $HOME/.bash_profile
 fi
-ln -snf ~/dotfiles/vim/.vimrc.keymap ~/.vimrc.keymap
+
+# zsh
+ln -sf $HOME/dotfiles/zsh/.zshrc $HOME/.zshrc
+ln -sf $HOME/dotfiles/zsh/.zpreztorc $HOME/.zpreztorc
+
+# vim
+ln -snf $HOME/dotfiles/vim/.vimrc $HOME/.vimrc 
+ln -snf $HOME/dotfiles/vim/.vimrc.keymap $HOME/.vimrc.keymap
 
 # emacs 
-ln -snf ~/dotfiles/.doom.d ~/.doom.d
-ln -snf ~/dotfiles/spacemacs/.spacemacs ~/.spacemacs
+ln -snf $HOME/dotfiles/.doom.d $HOME/.doom.d
 
-# alacritty
-if [ ! -d = "$HOME/.config/alacritty" ]; then
-	mkdir $HOME/.config/alacritty
+# p10k
+if [ $2 = "osx" ]; then
+    ln -snf $HOME/dotfiles/p10k $HOME/osx/.p10k.zsh
+elif [ $2 = "arch" ]; then
+    ln -snf $HOME/dotfiles/p10k $HOME/arch/.p10k.zsh
 fi
-ln -sf ~/dotfiles/zsh/.zshrc ~/.zshrc
-ln -sf ~/dotfiles/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
-ln -sf ~/dotfiles/zsh/.zpreztorc ~/.zpreztorc

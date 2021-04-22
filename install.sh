@@ -1,27 +1,68 @@
-#!/bin/zsh
-if [ $# -ne 2 ]; then
-	echo "please input the argument" 1>&2
-	echo "1. OS [arch, ubuntu]" 1>&2
-	echo "2. Complexity [simple, deep]" 1>&2
-	exit 1
-fi
+#!/usr/bin/env bash
+function usage {
+    cat <<EOM
+Usage: $(basename "$0") [OPTION] ...
+please input the argument
+    --help          Display help
+    --os VALUE      os [arch, osx]
+    --load_bash load dotfile's bashrc/bash_profile
+EOM
+    exit 2
+}
 
-if [ $1 = "arch" ]; then
-	sh $HOME/dotfiles/OS/arch.sh
-elif [ $1 = "ubuntu" ]; then
-	echo "development now ..."
-    # echo "not implement error" 1>&2
-	# exit 1
-fi
+OS="osx"
+LOAD_BASH=false
 
-sh $HOME/dotfiles/dotfilesDepends.sh
-sh $HOME/dotfiles/dotfilesLink.sh $2
-sh $HOME/dotfiles/dotfilesAfter.sh
-
-# prezto
-setopt EXTENDED_GLOB
-for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
-	ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
+while getopts ":h-:" opt; do
+    case "$opt" in
+        -)
+            case "${OPTARG}" in
+                help)
+                    usage
+                    ;;
+                os)
+                    echo "--os = ${OPTARG}"
+                    ;;
+                load_bash)
+                    LOAD_BASH=true
+                    ;;
+            esac
+            ;;
+        h)
+            help
+            ;;
+    esac
 done
 
-# chsh -s $(which zsh)
+cat <<EOM
+install settings
+	   your os                             : ${OS}
+	   load dotfile's bashrc/bash_profile? : ${LOAD_BASH}
+EOM
+
+
+
+
+# if [ $1 = "arch" ]; then
+# 	sh $HOME/dotfiles/etc/arch/init.sh
+# elif [ $1 = "osx" ]; then
+# 	sh $HOME/dotfiles/etc/osx/init.sh
+# fi
+
+# sh $HOME/dotfiles/dotfilesDepends.sh $1
+# sh $HOME/dotfiles/dotfilesLink.sh $1 $2
+# sh $HOME/dotfiles/dotfilesAfter.sh
+
+# # prezto
+# setopt EXTENDED_GLOB
+# for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
+# 	ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
+# done
+
+cat <<EOM
+
+Please run chsh to set default shell
+
+	   chsh -s $(which zsh)
+
+EOM

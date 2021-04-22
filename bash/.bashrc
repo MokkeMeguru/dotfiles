@@ -138,7 +138,6 @@ ex ()
   fi
 }
 
-eval $(opam env)
 
 # emacsdaemon
 function emd() {
@@ -171,17 +170,10 @@ function emg() {
 	fi
 }
 
-# python
-export PIPENV_PYTHON="$HOME/.pyenv/shims/python"
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin;$PATH"
-eval "$(pyenv init -)"
-
-# cuda
-export PATH=/home/opt/cuda/bin:${PATH}
-export LD_LIBRARY_PATH=/home/opt/cuda/lib64:${LD_LIBRARY_PATH}
-PIPENV_VENV_IN_PROJECT=1
-
-export TEXMFDIST=/usr/share/texmf-dist
-export WORKON_HOME="$HOME/Github/virtualenvs"
+# aliases
 alias ls=lsd
+alias cp="cp -i"                          # confirm before overwriting something
+alias df='df -h'                          # human-readable sizes
+alias free='free -m'                      # show sizes in MB
+alias more=less
+alias pyton="python3"
