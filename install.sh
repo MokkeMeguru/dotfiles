@@ -74,4 +74,6 @@ TOOD:
 
       2. set your font as "HackGen35Nerd Console" (macos) or "HackGenNerd"
 
+      3. if you want to use gcloud, install gcloud
+
 EOM
