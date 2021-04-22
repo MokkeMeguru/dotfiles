@@ -12,3 +12,4 @@ alias df='df -h'                          # human-readable sizes
 alias free='free -m'                      # show sizes in MB
 alias more=less
 alias pyton="python3"
+alias bb="$HOME/.bbsk/bb"
