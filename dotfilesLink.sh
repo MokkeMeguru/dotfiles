@@ -1,26 +1,27 @@
 #!/bin/sh
+DOTPATH=${DOTPATH:-"${HOME}/dotfiles"}
+LOAD_BASH=${LOAD_BASH:-"false"}
+OS=${OS:-"arch"}
 
+echo "BASH ${LOAD_BASH}"
 # bash
-if [ $1 = "w_bash" ]; then
-    
-    ln -sf $HOME/dotfiles/.bashrc $HOME/.bashrc
-    ln -sf $HOME/dotfiles/.bash_profile $HOME/.bash_profile
+if [ $LOAD_BASH=="true" ]; then
+    echo "Sync bash settings"
+    ln -sf $DOTPATH/bash/.bashrc $HOME/.bashrc
+    ln -sf $DOTPATH/bash/.bash_profile $HOME/.bash_profile
 fi
 
 # zsh
-ln -sf $HOME/dotfiles/zsh/.zshrc $HOME/.zshrc
-ln -sf $HOME/dotfiles/zsh/.zpreztorc $HOME/.zpreztorc
+ln -sf $DOTPATH/zsh/.zshrc $HOME/.zshrc
+ln -sf $DOTPATH/bash/.bash_profile $HOME/.zprofile
+# ln -sf $HOME/dotfiles/zsh/.zpreztorc $HOME/.zpreztorc
 
 # vim
-ln -snf $HOME/dotfiles/vim/.vimrc $HOME/.vimrc 
-ln -snf $HOME/dotfiles/vim/.vimrc.keymap $HOME/.vimrc.keymap
+ln -snf $DOTPATH/vim/.vimrc $HOME/.vimrc 
+ln -snf $DOTPATH/vim/.vimrc.keymap $HOME/.vimrc.keymap
 
 # emacs 
-ln -snf $HOME/dotfiles/.doom.d $HOME/.doom.d
+ln -snf $DOTPATH/.doom.d $HOME/.doom.d
 
 # p10k
-if [ $2 = "osx" ]; then
-    ln -snf $HOME/dotfiles/p10k $HOME/osx/.p10k.zsh
-elif [ $2 = "arch" ]; then
-    ln -snf $HOME/dotfiles/p10k $HOME/arch/.p10k.zsh
-fi
+ln -snf $DOTPATH/p10k/.p10k.zsh $HOME/.p10k.zsh

@@ -62,3 +62,7 @@
 (package! poetry)
 (package! elpy)
 (package! exec-path-from-shell)
+(package! ox-gfm)
+(package! markdown-preview-mode)
+(package! all-the-icons-dired)
+(package! all-the-icons-ivy-rich)

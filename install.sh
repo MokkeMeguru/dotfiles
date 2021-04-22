@@ -1,38 +1,51 @@
 #!/usr/bin/env bash
+DOTPATH=${DOTPATH:-"${HOME}/dotfiles"}
+
+echo $DOTPATH
 function usage {
     cat <<EOM
 Usage: $(basename "$0") [OPTION] ...
 please input the argument
-    --help          Display help
-    --os VALUE      os [arch, osx]
-    --load_bash load dotfile's bashrc/bash_profile
+    --help/-h  Display help
+    -o VALUE   os [arch, osx]
+    -l         load dotfile's bashrc/bash_profile
 EOM
     exit 2
 }
 
 OS="osx"
-LOAD_BASH=false
+LOAD_BASH="false"
+no_args="true"
 
-while getopts ":h-:" opt; do
-    case "$opt" in
+while getopts "o:lh-:" opt; do
+    case $opt in
         -)
             case "${OPTARG}" in
-                help)
-                    usage
-                    ;;
-                os)
-                    echo "--os = ${OPTARG}"
-                    ;;
-                load_bash)
-                    LOAD_BASH=true
-                    ;;
-            esac
+                help) usage
+                      ;;
+           esac
             ;;
-        h)
-            help
-            ;;
+        o) OS=${OPTARG}
+           ;;
+        l) LOAD_BASH="true"
+           ;;
+        h) usage
+           ;;
     esac
+    no_args="false"
 done
+
+if [ $no_args == "true" ]; then
+    usage
+    exit 1 
+fi
+
+if [ $OS == "arch" ] || [ $OS == "osx" ]; then
+    echo "--os = ${OS}"
+else
+    echo "os is choices from [arch, osx]"
+    exit 1
+fi
 
 cat <<EOM
 install settings
@@ -41,28 +54,24 @@ install settings
 EOM
 
 
+if [ $OS="arch" ]; then
+	sh $DOTPATH/etc/init/arch/init.sh
+elif [ $OS="osx" ]; then
+	sh $DOTPATH/etc/init/osx/init.sh
+fi
 
 
-# if [ $1 = "arch" ]; then
-# 	sh $HOME/dotfiles/etc/arch/init.sh
-# elif [ $1 = "osx" ]; then
-# 	sh $HOME/dotfiles/etc/osx/init.sh
-# fi
-
-# sh $HOME/dotfiles/dotfilesDepends.sh $1
-# sh $HOME/dotfiles/dotfilesLink.sh $1 $2
-# sh $HOME/dotfiles/dotfilesAfter.sh
-
-# # prezto
-# setopt EXTENDED_GLOB
-# for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
-# 	ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
-# done
+OS=${OS} sh $DOTPATH/dotfilesDepends.sh
+OS=${OS} LOAD_BASH=${LOAD_BASH} sh $DOTPATH/dotfilesLink.sh
+sh $HOME/dotfiles/dotfilesAfter.sh
 
 cat <<EOM
 
-Please run chsh to set default shell
+TOOD: 
+      1. run chsh to set default shell
 
-	   chsh -s $(which zsh)
+          chsh -s $(which zsh)
+
+      2. set your font as "HackGen35Nerd Console" (macos) or "HackGenNerd"
 
 EOM

@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
+OS=${OS:-"arch"}
+
 hack_gen_nerd=HackGenNerd_v2.3.2
 font_dir=$HOME/dotfiles
 asset_dir=$font_dir/assets
+install_dir=""
 
-if [ $# != 1 ]; then
-    echo "invalid args $*"
-    exit 1
-elif [ $1 = "macos" ]; then
+echo "OS is $OS"
+if [ $OS=="macos" ]; then
     install_dir=$HOME/Library/Fonts
-elif [ $1 = "arch" ]; then
+elif [ $OS=="arch" ]; then
     install_dir=$HOME/.local/share/fonts
     if [ ! -d $install_dir ]; then
         mkdir -p $install_dir
@@ -16,7 +17,8 @@ elif [ $1 = "arch" ]; then
 fi
 
 run_install=true
-if [ -d "$install_dir/${hack_gen_nerd}" ]; then
+echo "install dir: ${install_dir}"
+if [ $install_dir=="" ] || [ -d "$install_dir/${hack_gen_nerd}" ]; then
     run_install=false
 fi
 
@@ -30,8 +32,10 @@ if [ ! -f "${hack_gen_nerd}.zip" ] && "${run_install}"; then
 fi
 
 if "${run_install}"; then
+    echo $install_dir
+    echo "${hack_gen_nerd}.zip" 
     unzip -d $install_dir "${hack_gen_nerd}.zip" 
-    fc-cache -fv $install_dir
+    fc-cache -f $install_dir
 fi
 
 cat <<EOM
