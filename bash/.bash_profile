@@ -21,7 +21,7 @@ export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
 
 # rust
-source "$HOME/.cargo/env"
+export PATH="$HOME/.cargo/bin:$PATH"
 
 # go
 export GOPATH=$HOME/go
