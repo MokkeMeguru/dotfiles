@@ -40,3 +40,8 @@ echo "install rbenv"
 if [ ! -d $HOME/.rbenv ]; then
 	git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
 fi
+
+echo "install rust"
+if [ ! -d $HOME/.cargo ]; then
+	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+fi
