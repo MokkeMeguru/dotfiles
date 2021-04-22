@@ -1,1 +1,2 @@
+source .vimrc.keymap
 inoremap <silent> jk <ESC>

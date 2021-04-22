@@ -3,7 +3,7 @@
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 
-(exec-path-from-shell-copy-envs '("PATH"))
+;; (exec-path-from-shell-copy-envs '("PATH"))
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and s'nippets.
 (setq user-full-name "MokkeMeguru"
@@ -19,12 +19,14 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "monospace" :size 14))
+(setq doom-font (font-spec :family "HackGen35Nerd Console" :size 14))
+;; (set-fontset-font t 'japanese-jisx0208 (font-spec :family "Source Han Code JP"))
+
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-horizon)
+(setq doom-theme 'doom-opera)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -35,6 +37,7 @@
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
+
 
 
 ;; Here are some additional functions/macros that could help you configure Doom:
@@ -75,7 +78,7 @@ translation it is possible to get suggestion."
 (require 'ox-org)
 (setq org-latex-create-formula-image-program 'imagemagick)
 (setq org-ref-default-citation-link "citep")
-(setq org-latex-caption-above nil)
+(setq org-latex-caption-above '(table))
 (setq org-latex-with-hyperref nil)
 (setq org-latex-listings 'minted)
 (add-to-list 'org-latex-packages-alist '("" "minted"))
@@ -89,6 +92,23 @@ translation it is possible to get suggestion."
                ("\\section{%s}" . "\\section*{%s}")
                ("\\subsection{%s}" . "\\subsection*{%s}")
                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))
+
+(add-to-list 'org-latex-classes
+             '("ieee"
+               "\\documentclass[conference]{IEEEtran}"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ))
+
+(add-to-list 'org-latex-classes
+             '("jreport3"
+               "\\documentclass[12pt,a4j,twoside]{jreport}"
+               ("\\chapter{%s}" . "\\chapter*{%s}")
+                ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ))
 
 (org-babel-do-load-languages 'org-babel-load-languages
                              '((shell . t)
@@ -128,16 +148,17 @@ translation it is possible to get suggestion."
 (setq org-latex-pdf-process
       '("platex --shell-escape --kanji=utf-8 %f"
         "platex --shell-escape --kanji=utf-8 %f"
-        "bibtex %b"
-        ;; "biber %b"
+        ;; "bibtex %b"
+        "biber %b"
         "platex --shell-escape--kanji=utf-8 %f"
         "platex --shell-escape--kanji=utf-8 %f"
-        "platex --shell-escape--kanji=utf-8 %f"
+        ;;"platex --shell-escape--kanji=utf-8 %f"
         "dvipdfmx %b.dvi"))
 
 (setq org-latex-create-formula-image-program 'dvisvgm)
+(setq org-latex-caption-above '(table))
 
-(setq org-latex-caption-above (list 'table))
+;; (setq org-latex-caption-above (list 'table))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -162,7 +183,7 @@ translation it is possible to get suggestion."
 (define-key evil-normal-state-map "u" 'undo-fu-only-undo)
 (define-key evil-normal-state-map "\C-r" 'undo-fu-only-redo)
 
-(global-undo-tree-mode)
+;; (global-undo-tree-mode)
 
 (use-package dap-mode
   :config
@@ -196,13 +217,16 @@ as the pyenv version then also return nil. This works around https://github.com/
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("2cdc13ef8c76a22daa0f46370011f54e79bae00d5736340a5ddfe656a767fddf" "d5f8099d98174116cba9912fe2a0c3196a7cd405d12fa6b9375c55fc510988b5" "1ed5c8b7478d505a358f578c00b58b430dde379b856fbcb60ed8d345fc95594e" "379a804655efccc13a3d446468992bfdfc30ff27d19cfda6f62c7f9c9e7a8a7d" "bc836bf29eab22d7e5b4c142d201bcce351806b7c1f94955ccafab8ce5b20208" default))
  '(org-agenda-files
-   '("~/Documents/compress-transformer/compress-transformer[inlg]-re.org" "/home/meguru/org/daily/2020-08-12.org" "/home/meguru/org/todo/2020-6-29.org" "/home/meguru/org/todo/2020-7-1.org" "/home/meguru/org/todo/2020-7-2.org" "/home/meguru/org/notes.org" "/home/meguru/org/todo.org"))
- '(org-latex-caption-above nil)
+   '("/run/media/meguru/P/Github/master-report/report.org" "/home/meguru/org/daily/2020-08-12.org" "/home/meguru/org/todo/2020-6-29.org" "/home/meguru/org/todo/2020-7-1.org" "/home/meguru/org/todo/2020-7-2.org" "/home/meguru/org/notes.org" "/home/meguru/org/todo.org"))
  '(package-selected-packages
-   '(elpy poetry virtualenv google-translate python-black grip-mode forge transient company-jedi yasnippet-snippets php-mode org-ref evil-tutor-ja doom-themes dap-mode))
+   '(mo-git-blame git-blamed markdown-preview-mode ox-gfm org-preview-html clj-refactor mozc elpy poetry virtualenv google-translate python-black grip-mode forge transient company-jedi yasnippet-snippets php-mode org-ref evil-tutor-ja doom-themes dap-mode))
  '(safe-local-variable-values
-   '((eval bibtex-set-dialect 'biblatex)
+   '((cider-ns-refresh-after-fn . "integrant.repl/resume")
+     (cider-ns-refresh-before-fn . "integrant.repl/suspend")
+     (eval bibtex-set-dialect 'biblatex)
      (cider-default-cljs-repl . shadow)
      (cider-shadow-cljs-default-options . "app"))))
 
@@ -344,10 +368,40 @@ keyword.
   :config
   (python-black-on-save-mode))
 
-(setq exec-path (append '("/home/meguru/go/bin") exec-path))
+(setq exec-path (append '("/home/mguru/go/bin") exec-path))
 (setq lsp-gopls-codelens nil)
 (lsp-register-custom-settings
  '(("gopls.completeUnimported" t t)
    ("gopls.staticcheck" t t)))
 (put 'customize-variable 'disabled nil)
 (put 'upcase-region 'disabled nil)
+
+(setq python-shell-interpreter "jupyter"
+      python-shell-interpreter-args "console --simple-prompt"
+      python-shell-prompt-detect-failure-warning nil)
+
+(when (equal system-type 'gnu/linux)
+ (exec-path-from-shell-initialize)
+ )
+
+(setq org-babel-clojure-backend 'cider)
+
+(eval-after-load "org"
+  '(require 'ox-gfm nil t))
+
+
+;; (setq markdown-preview-javascript
+;;       (list "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"
+;;             "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"))
+
+(setq markdown-preview-stylesheets (list "~/.doom.d/github.css"
+                                         "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/vs.min.css"))
+
+(setq markdown-preview--preview-template
+      "~/.doom.d/preview.html")
+
+(set-fontset-font t 'japanese-jisx0208 (font-spec :family "IPAExGothic"))
+
+
+(all-the-icons-dired-mode)
+(all-the-icons-ivy-rich-mode)

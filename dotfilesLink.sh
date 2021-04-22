@@ -1,21 +1,27 @@
 #!/bin/sh
+DOTPATH=${DOTPATH:-"${HOME}/dotfiles"}
+LOAD_BASH=${LOAD_BASH:-"false"}
+OS=${OS:-"arch"}
+
+# bash
+if [ $LOAD_BASH=="true" ]; then
+    echo "Sync bash settings"
+    ln -sf $DOTPATH/bash/.bashrc $HOME/.bashrc
+    ln -sf $DOTPATH/bash/.bash_profile $HOME/.bash_profile
+fi
+
+# zsh
+ln -sf $DOTPATH/zsh/.zshrc $HOME/.zshrc
+ln -sf $DOTPATH/bash/.bash_profile $HOME/.zprofile
+# ln -sf $HOME/dotfiles/zsh/.zpreztorc $HOME/.zpreztorc
 
 # vim
-if [ "$1" = "simple" ]; then
-    ln -snf ~/dotfiles/vim/.vimrc_simple ~/.vimrc
-else
-    ln -snf ~/dotfiles/vim/.vimrc ~/.vimrc 
-fi
-ln -snf ~/dotfiles/vim/.vimrc.keymap ~/.vimrc.keymap
+ln -snf $DOTPATH/vim/.vimrc $HOME/.vimrc 
+ln -snf $DOTPATH/vim/.vimrc.keymap $HOME/.vimrc.keymap
+ln -snf $DOTPATH/vim/.ideavimrc $HOME/.ideavimrc
 
 # emacs 
-ln -snf ~/dotfiles/.doom.d ~/.doom.d
-ln -snf ~/dotfiles/spacemacs/.spacemacs ~/.spacemacs
+ln -snf $DOTPATH/doom.d $HOME/.doom.d
 
-# alacritty
-# if [ ! -d = "$HOME/.config/alacritty" ]; then
-# 	mkdir $HOME/.config/alacritty
-# fi
-ln -sf ~/dotfiles/zsh/.zshrc ~/.zshrc
-# ln -sf ~/dotfiles/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
-ln -sf ~/dotfiles/zsh/.zpreztorc ~/.zpreztorc
+# p10k
+ln -snf $DOTPATH/p10k/.p10k.zsh $HOME/.p10k.zsh
