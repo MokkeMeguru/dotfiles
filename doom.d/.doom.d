@@ -1,1 +1,0 @@
-/home/meguru/dotfiles/.doom.d
