@@ -3,7 +3,6 @@ DOTPATH=${DOTPATH:-"${HOME}/dotfiles"}
 LOAD_BASH=${LOAD_BASH:-"false"}
 OS=${OS:-"arch"}
 
-echo "BASH ${LOAD_BASH}"
 # bash
 if [ $LOAD_BASH=="true" ]; then
     echo "Sync bash settings"
