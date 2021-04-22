@@ -184,3 +184,4 @@ PIPENV_VENV_IN_PROJECT=1
 
 export TEXMFDIST=/usr/share/texmf-dist
 export WORKON_HOME="$HOME/Github/virtualenvs"
+alias ls=lsd

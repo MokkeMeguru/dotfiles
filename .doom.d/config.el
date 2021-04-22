@@ -3,7 +3,7 @@
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 
-(exec-path-from-shell-copy-envs '("PATH"))
+;; (exec-path-from-shell-copy-envs '("PATH"))
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and s'nippets.
 (setq user-full-name "MokkeMeguru"
@@ -54,19 +54,19 @@
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
 
-(require 'google-translate)
-(defun google-translate--search-tkk () "Search TKK." (list 430675 2721866130))
-(setq google-translate-default-source-language "en")
-(setq google-translate-default-target-language "ja")
-(defun google-translate-json-suggestion (json)
-  "Retrieve from JSON (which returns by the
-`google-translate-request' function) suggestion. This function
-does matter when translating misspelled word. So instead of
-translation it is possible to get suggestion."
-  (let ((info (aref json 7)))
-    (if (and info (> (length info) 0))
-        (aref info 1)
-      nil)))
+;; (require 'google-translate)
+;; (defun google-translate--search-tkk () "Search TKK." (list 430675 2721866130))
+;; (setq google-translate-default-source-language "en")
+;; (setq google-translate-default-target-language "ja")
+;; (defun google-translate-json-suggestion (json)
+;;  "Retrieve from JSON (which returns by the
+;; `google-translate-request' function) suggestion. This function
+;; does matter when translating misspelled word. So instead of
+;;translation it is possible to get suggestion."
+;;   (let ((info (aref json 7)))
+;;     (if (and info (> (length info) 0))
+;;         (aref info 1)
+;;       nil)))
 
 ;; org mode
 (require 'ox)
@@ -162,7 +162,7 @@ translation it is possible to get suggestion."
 (define-key evil-normal-state-map "u" 'undo-fu-only-undo)
 (define-key evil-normal-state-map "\C-r" 'undo-fu-only-redo)
 
-(global-undo-tree-mode)
+;; (global-undo-tree-mode)
 
 (use-package dap-mode
   :config
@@ -351,3 +351,8 @@ keyword.
    ("gopls.staticcheck" t t)))
 (put 'customize-variable 'disabled nil)
 (put 'upcase-region 'disabled nil)
+
+(defun set-alpha (alpha-num)
+  "set frame parameter 'alpha"
+  (interactive "nAlpha: ")
+  (set-frame-parameter nil 'alpha (cons alpha-num '(90))))
