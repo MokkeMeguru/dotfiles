@@ -19,9 +19,10 @@ ln -sf $DOTPATH/bash/.bash_profile $HOME/.zprofile
 # vim
 ln -snf $DOTPATH/vim/.vimrc $HOME/.vimrc 
 ln -snf $DOTPATH/vim/.vimrc.keymap $HOME/.vimrc.keymap
+ln -snf $DOTPATH/vim/.ideavimrc $HOME/.ideavimrc
 
 # emacs 
-ln -snf $DOTPATH/.doom.d $HOME/.doom.d
+ln -snf $DOTPATH/doom.d $HOME/.doom.d
 
 # p10k
 ln -snf $DOTPATH/p10k/.p10k.zsh $HOME/.p10k.zsh

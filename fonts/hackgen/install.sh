@@ -6,7 +6,6 @@ font_dir=$HOME/dotfiles
 asset_dir=$font_dir/assets
 install_dir=""
 
-echo "OS is $OS"
 if [ $OS=="macos" ]; then
     install_dir=$HOME/Library/Fonts
 elif [ $OS=="arch" ]; then
@@ -17,13 +16,12 @@ elif [ $OS=="arch" ]; then
 fi
 
 run_install=true
-echo "install dir: ${install_dir}"
 if [ $install_dir=="" ] || [ -d "$install_dir/${hack_gen_nerd}" ]; then
     run_install=false
 fi
 
 if [ ! -d $font_dir ] && "${run_install}"; then
-    echo "make dir to install HackGenNerd fonts"
+    echo "make dir to install HackGenNerd fonts ${font_dir}"
     mkdir -p $font_dir
 fi
 
@@ -37,7 +35,3 @@ if "${run_install}"; then
     unzip -d $install_dir "${hack_gen_nerd}.zip" 
     fc-cache -f $install_dir
 fi
-
-cat <<EOM
-Please set your font as "HackGen35Nerd Console" (macos) or "HackGenNerd" 
-EOM
