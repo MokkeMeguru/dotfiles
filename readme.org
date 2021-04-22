@@ -25,4 +25,5 @@ And then, you need to follow the instruction.
 ./install -o arch -l
   #+end_src
   
-  
+ 
+[[./docs/captures/capture.png]] 
