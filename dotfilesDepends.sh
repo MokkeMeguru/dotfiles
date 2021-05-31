@@ -33,6 +33,14 @@ if !(type "bb" > /dev/null 2>&1); then
 	./install $HOME/.bbsk
 fi
 
+echo "install clj-kondo"
+if !(type "clj-kondo" > /dev/null 2>&1); then
+	curl -sLO https://raw.githubusercontent.com/clj-kondo/clj-kondo/master/script/install-clj-kondo
+	chmod +x install-clj-kondo
+	./install-clj-kondo
+	fibreconfig
+fi
+
 echo "install pyenv"
 if [ ! -d $HOME/.pyenv ]; then
 	git clone git://github.com/yyuu/pyenv.git ~/.pyenv
@@ -47,3 +55,4 @@ echo "install rust"
 if [ ! -d $HOME/.cargo ]; then
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 fi
+

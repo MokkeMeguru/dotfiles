@@ -185,20 +185,20 @@ translation it is possible to get suggestion."
 
 ;; (global-undo-tree-mode)
 
-(use-package dap-mode
-  :config
-  (dap-mode 1)
-  (require 'dap-mode)
-  (require 'dap-go)
-  (require 'dap-python)
-  (require 'dap-gdb-lldb)
-  (require 'dap-hydra)
-  (add-hook 'dap-stopped-hook
-            (lambda (arg) (call-interactively #'dap-hydra)))
-  (use-package dap-ui
-    :ensure nil
-    :config
-    (dap-ui-mode 1)))
+;; (use-package dap-mode
+;;   :config
+;;   (dap-mode 1)
+;;   (require 'dap-mode)
+;;   (require 'dap-go)
+;;   (require 'dap-python)
+;;   (require 'dap-gdb-lldb)
+;;   (require 'dap-hydra)
+;;   (add-hook 'dap-stopped-hook
+;;             (lambda (arg) (call-interactively #'dap-hydra)))
+;;   (use-package dap-ui
+;;     :ensure nil
+;;     :config
+;;     (dap-ui-mode 1)))
 
 (setq lsp-ui-doc-enable t)
 
@@ -370,15 +370,13 @@ keyword.
 
 (setq exec-path (append '("/home/mguru/go/bin") exec-path))
 (setq lsp-gopls-codelens nil)
-(lsp-register-custom-settings
- '(("gopls.completeUnimported" t t)
-   ("gopls.staticcheck" t t)))
 (put 'customize-variable 'disabled nil)
 (put 'upcase-region 'disabled nil)
 
 (setq python-shell-interpreter "jupyter"
       python-shell-interpreter-args "console --simple-prompt"
       python-shell-prompt-detect-failure-warning nil)
+
 
 (when (equal system-type 'gnu/linux)
  (exec-path-from-shell-initialize)
@@ -405,3 +403,23 @@ keyword.
 
 (all-the-icons-dired-mode)
 (all-the-icons-ivy-rich-mode)
+
+(when (eq system-type 'darwin)
+  (keyboard-translate ?\C-h ?\C-?))
+
+(require 'lsp-pyright)
+
+
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook 'flycheck-golangci-lint-setup))
+
+(setq flycheck-golangci-lint-config "~/.doom.d/golangci-lint/config.yml")
+
+
+(with-eval-after-load "persp-mode"
+  (global-set-key (kbd "C-x b") 'persp-switch-to-buffer)
+  (global-set-key (kbd "C-x k") 'persp-kill-buffer))
+
+;; gotests
+(add-to-list 'load-path "~/.doom.d/external-pkg")
+(require 'gotests)
