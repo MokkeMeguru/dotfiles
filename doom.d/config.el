@@ -423,3 +423,7 @@ keyword.
 ;; gotests
 (add-to-list 'load-path "~/.doom.d/external-pkg")
 (require 'gotests)
+
+;; aspell
+(setq ispell-program-name "aspell")
+(setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US"))
