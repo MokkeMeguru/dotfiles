@@ -60,3 +60,10 @@ echo "install goenv"
 if [ ! -d $HOME/.goenv ]; then
 	git clone https://github.com/syndbg/goenv.git $HOME/.goenv
 fi
+
+echo "install textlint"
+if [ ! -d textlint ] && [ -d npm ]; then
+	npm install -g textlint textlint-rule-preset-ja-technical-writing textlint-rule-max-ten textlint-rule-no-mix-dearu-desumasu textlint-rule-prh textlint-filter-rule-comments textlint-filter-rule-allowlist textlint-plugin-review
+
+
+fi

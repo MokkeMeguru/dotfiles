@@ -70,3 +70,6 @@
 (package! protobuf-mode)
 (package! persp-mode)
 (package! multi-vterm)
+(package! magit-section)
+(package! graphql-mode)
+(package! review-mode)

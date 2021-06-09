@@ -1,0 +1,14 @@
+{
+  "rules": {
+    "write-good": {
+      "passive": false,
+      "thereIs": false,
+      "preset-ja-technical-writing": true
+    }
+  },
+  "plugins": {
+    "@textlint/text": {
+      "extensions": [".org"]
+    }
+  }
+}

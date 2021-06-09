@@ -8,10 +8,16 @@
  '(org-agenda-files
    '("/run/media/meguru/P/Github/master-report/report.org" "/home/meguru/org/daily/2020-08-12.org" "/home/meguru/org/todo/2020-6-29.org" "/home/meguru/org/todo/2020-7-1.org" "/home/meguru/org/todo/2020-7-2.org" "/home/meguru/org/notes.org" "/home/meguru/org/todo.org"))
  '(package-selected-packages
-   '(multi-term mo-git-blame git-blamed markdown-preview-mode ox-gfm org-preview-html clj-refactor mozc elpy poetry virtualenv google-translate python-black grip-mode forge transient company-jedi yasnippet-snippets php-mode org-ref evil-tutor-ja doom-themes dap-mode))
+   '(review-mode graphql-doc graphql multi-vterm graphql-mode multi-term mo-git-blame git-blamed markdown-preview-mode ox-gfm org-preview-html clj-refactor mozc elpy poetry virtualenv google-translate python-black grip-mode forge transient company-jedi yasnippet-snippets php-mode org-ref evil-tutor-ja doom-themes dap-mode))
  '(safe-local-variable-values
    '((cider-ns-refresh-after-fn . "integrant.repl/resume")
      (cider-ns-refresh-before-fn . "integrant.repl/suspend")
      (eval bibtex-set-dialect 'biblatex)
      (cider-default-cljs-repl . shadow)
      (cider-shadow-cljs-default-options . "app"))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(aw-leading-char-face ((t (:foreground "red" :weight normal :height 2.5)))))

@@ -427,3 +427,34 @@ keyword.
 ;; aspell
 (setq ispell-program-name "aspell")
 (setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US"))
+
+;; typescript
+(setq typescript-indent-level 2)
+
+;; graphql
+(add-hook 'graphql-mode-hook
+          (lambda
+            ()
+            (make-local-variable 'graphql-indent-level)
+            (setq graphql-indent-level 4)))
+
+;; textlint
+(flycheck-define-checker textlint
+  "A linter for Markdown"
+  :command ("textlint" "--format" "unix" source)
+  :error-patterns
+  ((warning line-start (file-name) ":" line ":" column ": "
+            (id (one-or-more (not (any " "))))
+            (message (one-or-more not-newline)
+                     (zero-or-more "\n" (any " ") (one-or-more not-newline)))
+            line-end
+            ))
+  :modes (text-mode org-mode markdown-mode review-mode))
+
+(add-to-list 'flycheck-checkers 'textlint)
+
+;; fix for bug: device x is not a termcap terminal device
+(setq xterm-set-window-title t)
+(defadvice! fix-xterm-set-window-title (&optional terminal)
+  :before-while #'xterm-set-window-title
+  (not (display-graphic-p terminal)))
