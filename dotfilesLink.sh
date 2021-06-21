@@ -27,4 +27,4 @@ ln -snf $DOTPATH/doom.d $HOME/.doom.d
 ln -snf $DOTPATH/p10k/.p10k.zsh $HOME/.p10k.zsh
 
 # textlint
-ln -snf $DOTPATH/textlint/.textlintrc $HOME/.textlintrc
+ln -snf $DOTPATH/textlint/.textlintrc.json $HOME/.textlintrc.json

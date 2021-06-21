@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: testtempl
+# uuid: testtempl
+# key: testtempl
+# condition: t
+# --
+ctrl := gomock.NewController(t)
+defer ctrl.Finish()
+
+require.Truef(t, errors.Is(tt.wantErr, err), "unexpected error: %v != %v", tt.wantErr, err)
+require.EqualValues(t, tt.want, m)

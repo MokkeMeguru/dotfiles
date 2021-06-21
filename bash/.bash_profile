@@ -5,13 +5,12 @@ fi
 # emacs
 export PATH="/Applications/MacPorts/Emacs.app/Contents/MacOS:$PATH"
 
-# python
-export PIPENV_PYTHON="$HOME/.pyenv/shims/python"
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin;$PATH"
-if which pyenv >/dev/null; then eval "$(pyenv init -)"; fi
-PIPENV_VENV_IN_PROJECT=1
-export WORKON_HOME="$HOME/Github/virtualenvs"
+# go
+export GOPATH=$HOME/go
+export GOENV_ROOT="$HOME/.goenv"
+export PATH="$GOENV_ROOT/bin:$PATH"
+eval "$(goenv init -)"
+export PATH="$GOROOT/bin:$GOPATH/bin:$PATH"
 
 # ruby
 export PATH="$HOME/.rbenv/bin:$PATH"
@@ -22,23 +21,20 @@ export PATH="$VOLTA_HOME/bin:$PATH"
 # rust
 export PATH="$HOME/.cargo/bin:$PATH"
 
-# go
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
-
 # cuda
 export LD_LIBRARY_PATH=$HOME/.local/lib:$LD_LIBRARY_PATH
 export PKG_CONFIG_PATH=$HOME/.local/lib/pkgconfig:$PKG_CONFIG_PATH
 export LD_LIBRARY_PATH=/opt/cuda/lib64:${LD_LIBRARY_PATH}
-export PATH=/opt/cuda/bin:l${PATH}
+export PATH=/opt/cuda/bin:${PATH}
+
+# python
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin;$PATH"
+if which pyenv >/dev/null; then eval "$(pyenv init -)"; fi
+
 
 # gcloud
 if [ -f "${HOME}/google-cloud-sdk/path.zsh.inc" ]; then . "${HOME}/google-cloud-sdk/path.zsh.inc"; fi
 if [ -f "${HOME}/google-cloud-sdk/completion.zsh.inc" ]; then . "${HOME}/google-cloud-sdk/completion.zsh.inc"; fi
 
 if which direnv >/dev/null; then eval "$(direnv hook bash)"; fi
-export GOENV_ROOT="$HOME/.goenv"
-export PATH="$GOENV_ROOT/bin:$PATH"
-eval "$(goenv init -)"
-export PATH="$GOROOT/bin:$PATH"
-export PATH="$PATH:$GOPATH/bin"

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+DOTPATH=${DOTPATH:-"${HOME}/dotfiles"}
 OS=${OS:-"arch"}
 
 if [ ! -d $HOME/Github ]; then
@@ -6,7 +7,7 @@ if [ ! -d $HOME/Github ]; then
 fi
 
 echo "install hackgen font"
-sh ./fonts/hackgen/install.sh
+sh $DOTPATH/fonts/hackgen/install.sh
 
 # echo "install zprezto"
 # if [ ! -e ${ZDOTDIR:-$HOME}/.zprezto ]; then
@@ -61,9 +62,25 @@ if [ ! -d $HOME/.goenv ]; then
 	git clone https://github.com/syndbg/goenv.git $HOME/.goenv
 fi
 
+echo "install golsp"
+if [ ! -d $HOME/golsp ]; then
+	go get -u github.com/davidrjenni/reftools/cmd/fillstruct
+	GO111MODULE=on go get golang.org/x/tools/gopls@latest
+fi
+
+echo "install anyenv"
+if [ ! -d anyenv ]; then
+	git clone https://github.com/anyenv/anyenv $HOME/.anyenv
+	$HOME/.anyenv/bin/anyenv init
+fi
+
 echo "install textlint"
 if [ ! -d textlint ] && [ -d npm ]; then
-	npm install -g textlint textlint-rule-preset-ja-technical-writing textlint-rule-max-ten textlint-rule-no-mix-dearu-desumasu textlint-rule-prh textlint-filter-rule-comments textlint-filter-rule-allowlist textlint-plugin-review
+	npm install -g textlint textlint-rule-preset-ja-technical-writing textlint-rule-max-ten textlint-rule-no-mix-dearu-desumasu textlint-rule-prh textlint-filter-rule-comments textlint-filter-rule-allowlist textlint-plugin-review textlint-rule-write-good
+fi
 
-
+echo "install pyenv"
+if [ ! -d pyenv ]; then
+	git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
+	cd $HOME/.pyenv && src/configure && make -C src
 fi

@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# name: usecase
+# uuid: usecase
+# key: usecase
+# condition: t
+# --
+type $1InputPort interface {
+	Execute(ctx context.Context) error
+}
+
+type $1Interactor struct {
+}
+
+func New$1Usecase() $1InputPort {
+	return &$1Interactor{
+	}
+}
+
+func (i *$1Interactor) Execute(ctx context.Context) error {
+	return nil
+}

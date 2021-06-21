@@ -1,0 +1,85 @@
+# -*- mode: snippet -*-
+# name: admin-loader
+# uuid: admin-loader
+# key: admin-loader
+# condition: t
+# --
+type $1Key struct {
+    // TODO
+}
+
+func (k $1Key) String() string {
+    // TODO
+}
+
+func (k $1Key) Raw() interface{} {
+    return k
+}
+
+func (k $1Key) ToInput() string { // TODO
+	// TODO
+}
+
+type $1Loader struct {
+	loader dataloader.Interface
+}
+
+func New$1Loader(inputPort usecase.Get$1InputPort) *$1Loader {
+	batchFunc := func(ctx context.Context, keys dataloader.Keys) []*dataloader.Result {
+		inputs := make([]$2, len(keys))
+		results := make([]*dataloader.Result, len(inputs))
+
+		for i, rawKey := range keys {
+			key, ok := rawKey.Raw().($1Key)
+			if !ok {
+				for i := range inputs {
+					results[i] = &dataloader.Result{
+						Error: errors.ErrRecordNotFound.Swrapf("dataloader catch invalid input: %v", key),
+					}
+				}
+				return results
+			}
+			inputs[i] = key.ToInput()
+		}
+
+		ms, err := inputPort.Execute(ctx, inputs)
+		if err != nil {
+			for i := range inputs {
+				results[i] = &dataloader.Result{
+					Error: err,
+				}
+			}
+			return results
+		}
+
+		for i, input := range inputs {
+			m, ok := ms[input]
+			if !ok {
+				results[i] = &dataloader.Result{
+					Error: errors.ErrRecordNotFound.Swrapf("$1(%v)", input),
+				}
+			} else {
+				results[i] = &dataloader.Result{Data: m}
+			}
+		}
+		return results
+	}
+	return &$1Loader{
+		loader: dataloader.NewBatchedLoader(batchFunc),
+	}
+}
+
+func (l *$1Loader) Load(ctx context.Context, key $1Key) ($3, error) {
+	thunk := l.loader.Load(ctx, key)
+	result, err := thunk()
+	if err != nil {
+		return nil, err
+	}
+
+	m, ok := result.($3)
+	if !ok {
+		return nil, xerrors.Errorf("loaded data is invalid: %v", result)
+	}
+
+	return m, nil
+}

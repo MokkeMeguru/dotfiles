@@ -1,9 +1,7 @@
 {
   "rules": {
     "write-good": {
-      "passive": false,
-      "thereIs": false,
-      "preset-ja-technical-writing": true
+      "preset-ja-technical-writing": false
     }
   },
   "plugins": {

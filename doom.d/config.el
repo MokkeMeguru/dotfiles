@@ -369,7 +369,7 @@ keyword.
   (python-black-on-save-mode))
 
 (setq exec-path (append '("/home/mguru/go/bin") exec-path))
-(setq lsp-gopls-codelens nil)
+(setq lsp-gopls-codelens t)
 (put 'customize-variable 'disabled nil)
 (put 'upcase-region 'disabled nil)
 
@@ -440,16 +440,18 @@ keyword.
 
 ;; textlint
 (flycheck-define-checker textlint
-  "A linter for Markdown"
-  :command ("textlint" "--format" "unix" source)
+  "A linter for prose."
+  :command ("textlint" "--format" "unix"
+             ;; "--rule" "no-mix-dearu-desumasu" "--rule" "max-ten" "--rule" "spellcheck-tech-word"
+            "--config" (eval (format (expand-file-name ".textlintrc.json" "~")))
+             source-inplace)
   :error-patterns
   ((warning line-start (file-name) ":" line ":" column ": "
-            (id (one-or-more (not (any " "))))
-            (message (one-or-more not-newline)
-                     (zero-or-more "\n" (any " ") (one-or-more not-newline)))
-            line-end
-            ))
-  :modes (text-mode org-mode markdown-mode review-mode))
+     (id (one-or-more (not (any " "))))
+     (message (one-or-more not-newline)
+       (zero-or-more "\n" (any " ") (one-or-more not-newline)))
+     line-end))
+  :modes (text-mode markdown-mode gfm-mode org-mode))
 
 (add-to-list 'flycheck-checkers 'textlint)
 
@@ -458,3 +460,12 @@ keyword.
 (defadvice! fix-xterm-set-window-title (&optional terminal)
   :before-while #'xterm-set-window-title
   (not (display-graphic-p terminal)))
+
+;; (define-key go-mode-map (kbd "C-c C-k") 'go-fill-struct)
+
+(lsp-register-custom-settings
+ '(("gopls.completeUnimported" t t)
+   ("gopls.staticcheck" t t)))
+
+(after! lsp-ui
+  (setq lsp-ui-doc-enable t))
