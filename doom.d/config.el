@@ -26,7 +26,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-dark+-blue-modeline)
+(setq doom-theme 'doom-material)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -419,7 +419,6 @@ keyword.
 (with-eval-after-load "persp-mode"
   (global-set-key (kbd "C-x b") 'persp-switch-to-buffer)
   (global-set-key (kbd "C-x k") 'persp-kill-buffer))
-
 ;; gotests
 (add-to-list 'load-path "~/.doom.d/external-pkg")
 (require 'gotests)
@@ -469,3 +468,25 @@ keyword.
 
 (after! lsp-ui
   (setq lsp-ui-doc-enable t))
+
+(after! go-mode
+  (setq gofmt-command "goimports")
+  (add-hook 'go-mode-hook
+            (lambda ()
+              (add-hook 'after-save-hook 'gofmt nil 'make-it-local))))
+
+(defun my/prettier ()
+  (interactive)
+  (shell-command
+    (format "%s --write %s"
+      (shell-quote-argument (executable-find "prettier"))
+      (shell-quote-argument (expand-file-name buffer-file-name))))
+  (revert-buffer t t t))
+
+(add-hook 'typescript-mode-hook
+  (lambda ()
+    (add-hook 'after-save-hook 'my/prettier t t)))
+
+(add-hook 'typescript-tsx-mode-hook
+  (lambda ()
+    (add-hook 'after-save-hook 'my/prettier t t)))

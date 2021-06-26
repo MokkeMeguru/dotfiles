@@ -73,3 +73,4 @@
 (package! magit-section)
 (package! graphql-mode)
 (package! review-mode)
+(package! prettier)
