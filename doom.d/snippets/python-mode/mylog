@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name:mylog
+# key: mylog
+# --
+import tensorflow as tf
+import sys
+import os
+import logging
+
+logger = tf.get_logger()
+logger.setLevel(logging.INFO)
+
+handler = logging.StreamHandler(sys.stdout)
+if len(logger.handlers) == 0:
+    logger.addHandler(handler)

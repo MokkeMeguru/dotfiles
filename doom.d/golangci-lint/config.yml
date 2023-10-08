@@ -1,0 +1,30 @@
+# This file contains all available configuration options
+# with their default values.
+
+# options for analysis running
+run:
+  # default concurrency is a available CPU number
+  concurrency: 2
+
+  # timeout for analysis, e.g. 30s, 5m, default is 1m
+  timeout: 1m
+
+linters:
+  enable:
+    - deadcode
+    - errcheck
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - structcheck
+    - typecheck
+    - unused
+    - varcheck
+    - gocyclo
+    - gosimple
+  disable-all: true
+  presets:
+    - bugs
+    - unused
+  fast: false

@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: import swr
+# uuid: import-swr
+# key: iswr
+# condition: t
+# --
+import useSWR from "swr";

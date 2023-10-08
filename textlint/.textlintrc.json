@@ -1,0 +1,12 @@
+{
+  "rules": {
+    "write-good": {
+      "preset-ja-technical-writing": false
+    }
+  },
+  "plugins": {
+    "@textlint/text": {
+      "extensions": [".org"]
+    }
+  }
+}
