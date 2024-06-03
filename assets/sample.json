@@ -1,0 +1,16 @@
+[
+    {
+        "id": "001",
+        "name": "meguru",
+        "age": 27,
+        "sex": "male",
+        "from": "japan"
+    },
+    {
+        "id": "002",
+        "name": "takuya",
+        "age": 30,
+        "sex": "male",
+        "from": "japan"
+    }
+]
