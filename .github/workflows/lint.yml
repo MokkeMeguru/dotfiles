@@ -1,0 +1,16 @@
+name: lint
+
+on: 
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  lint:
+    name: lint
+    runs-on: 
+      labels: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: msg
+        run: |
+          echo "::warning file=assets/sample.csv,line=2,endLine=2,col=2,endColumn=2,title=message-title::Hello World, Meguru"
