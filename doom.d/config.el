@@ -29,12 +29,15 @@
 ;; refresh your font settings. If Emacs still can't find your font, it likely
 ;; wasn't installed correctly. Font issues are rarely Doom issues!
 
-(setq doom-font (font-spec :family "HackGen35 Console" :size 18))
+(setq doom-font (font-spec :family "HackGen35 Console" :size 14)
+      doom-symbol-font (font-spec :family (if IS-MAC "Apple Color Emoji" "JuliaMono")))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'modus-vivendi-deuteranopia)
+(setq doom-theme 'doom-spacegrey)
+;; (setq doom-theme 'catppuccin)
+;; (setq catppuccin-flavor 'macchiato)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -99,11 +102,11 @@
      (setq org-babel-clojure-backend 'cider)
 
 
-     (setq org-latex-create-formula-image-program 'imagemagick)
+     (setq org-preview-latex-default-process 'imagemagick)
      (setq org-ref-default-citation-link "citep")
      (setq org-latex-caption-above '(table))
-     (setq org-latex-with-hyperref nil)
-     (setq org-latex-listings 'minted)
+     (setq org-latex-hyperref-template nil)
+     (setq org-latex-src-block-backend 'minted)
      (add-to-list 'org-latex-packages-alist '("" "minted"))
      (setq org-latex-minted-options
            '(("frame" "lines") ("linenos=true")))
@@ -178,149 +181,28 @@
              ;;"platex --shell-escape--kanji=utf-8 %f"
              "dvipdfmx %b.dvi"))
 
-     (setq org-latex-create-formula-image-program 'dvisvgm)
+     (setq org-preview-latex-default-process 'dvisvgm)
      (setq org-latex-caption-above '(table))
      (setq org-log-done 'time)
      )
   )
 
-(global-set-key (kbd "M-%") 'vr/query-replace)
-
+;; yasnippet
 (require 'yasnippet)
 (require 'yasnippet-snippets)
 
-(setq-default evil-escape-key-sequence "jk")
-(setq evil-disable-insert-state-bindings t)
-(global-set-key (kbd "C-e") 'move-end-of-line)
-(define-key evil-visual-state-map "\C-e" 'move-end-of-line)
-(define-key evil-normal-state-map "\C-e" 'move-end-of-line)
-
-(define-key evil-normal-state-map "u" 'undo-fu-only-undo)
-(define-key evil-normal-state-map "\C-r" 'undo-fu-only-redo)
-
-(setq lsp-ui-doc-enable t)
-
-(use-package python-black
-  :demand t
-  :after python
-  :config
-  (python-black-on-save-mode))
-
-(with-eval-after-load 'python-mode
-  (require 'python-black)
-  (setq +python-ipython-repl-args '("-i" "--simple-prompt" "--no-color-info"))
-  (setq +python-jupyter-repl-args '("--simple-prompt")))
-
+;; os
 (when (equal system-type 'gnu/linux)
   (exec-path-from-shell-initialize))
 
-(with-eval-after-load 'markdown-mode
-  (setq markdown-preview-stylesheets (list "~/.doom.d/github.css"
-                                           "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/vs.min.css"))
-  (setq markdown-preview--preview-template "~/.doom.d/preview.html"))
-
+;; face
 (all-the-icons-dired-mode)
 (all-the-icons-ivy-rich-mode)
 
-(when (eq system-type 'darwin)
-  (keyboard-translate ?\C-h ?\C-?))
-
-(with-eval-after-load 'python-mode
-  (require 'lsp-pyright))
-
-
-(eval-after-load 'go-mode
-  '(add-hook 'flycheck-mode-hook 'flycheck-golangci-lint-setup))
-
-(setq flycheck-golangci-lint-config "~/.doom.d/golangci-lint/config.yml")
-
-
-(with-eval-after-load "persp-mode"
-  (global-set-key (kbd "C-x b") 'persp-switch-to-buffer)
-  (global-set-key (kbd "C-x k") 'persp-kill-buffer))
-
-;; aspell
-(setq ispell-program-name "aspell")
-(setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US"))
-
-;; typescript
-(setq typescript-indent-level 2)
-
-(after! lsp-mode
-  (add-to-list 'lsp--formatting-indent-alist '(typescript-tsx-mode . typescript-indent-level)))
-
-;; graphql
-(add-hook 'graphql-mode-hook
-          (lambda
-            ()
-            (make-local-variable 'graphql-indent-level)
-            (setq graphql-indent-level 2)))
-
-;; fix for bug: device x is not a termcap terminal device
-(setq xterm-set-window-title t)
-(defadvice! fix-xterm-set-window-title (&optional terminal)
-  :before-while #'xterm-set-window-title
-  (not (display-graphic-p terminal)))
-
-(with-eval-after-load 'lsp-mode
-  (lsp-register-custom-settings
-   '(("gopls.completeUnimported" t t)
-     ("gopls.staticcheck" t t)))
-
-
-  (setq lsp-go-codelenses '(
-                            (gc_details . t)
-                            (generate . t)
-                            (regenerate_cgo . t)
-                            (tidy . :json-false)
-                            (upgrade_dependency . :json-false)
-                            (test . t)
-                            (vendor . t))))
-
-(with-eval-after-load 'lsp-ui
-  (setq lsp-ui-doc-enable t))
-
-(with-eval-after-load 'go-mode
-  (setq gofmt-command "goimports")
-  (add-hook 'go-mode-hook
-            (lambda ()
-              (add-hook 'after-save-hook 'gofmt nil 'make-it-local))))
-
-(defun my/prettier ()
-  (interactive)
-  (shell-command
-   (format "%s --write %s"
-           (shell-quote-argument (executable-find "prettier"))
-           (shell-quote-argument (expand-file-name buffer-file-name))))
-  (revert-buffer t t t))
-
-(add-hook 'typescript-mode-hook
-          (lambda ()
-            (add-hook 'after-save-hook 'my/prettier t t)))
-
-(add-hook 'typescript-tsx-mode-hook
-          (lambda ()
-            (add-hook 'after-save-hook 'my/prettier t t)))
-
-(with-eval-after-load 'lsp-mode
-  (lsp-register-custom-settings
-   '(("gopls.completeUnimported" t t)
-     ("gopls.staticcheck" t t)))
-  (setq lsp-go-codelenses '(
-                            (gc_details . t)
-                            (generate . t)
-                            (regenerate_cgo . t)
-                            (tidy . :json-false)
-                            (upgrade_dependency . :json-false)
-                            (test . t)
-                            (vendor . t))))
-
 (defun set-alpha (alpha-num)
-  "set frame parameter 'alpha"
+  `set frame parameter 'alpha`
   (interactive "nAlpha: ")
   (set-frame-parameter nil 'alpha (cons alpha-num '(90))))
-
-(setq mermaid-flags "~/.doom.d/mermaid_config.json")
 
 ;; modeline
 (poke-line-global-mode 1)
@@ -332,3 +214,250 @@
   :config
   (line-number-mode 0)
   (column-number-mode 0))
+
+;;;; fix for bug: device x is not a termcap terminal device
+(setq xterm-set-window-title t)
+(defadvice! fix-xterm-set-window-title (&optional terminal)
+  :before-while #'xterm-set-window-title
+  (not (display-graphic-p terminal)))
+
+;; keyboard utils
+(global-set-key (kbd "M-%") 'vr/query-replace)
+
+(setq-default evil-escape-key-sequence "jk")
+(setq evil-disable-insert-state-bindings t)
+(global-set-key (kbd "C-e") 'move-end-of-line)
+(define-key evil-visual-state-map "\C-e" 'move-end-of-line)
+(define-key evil-normal-state-map "\C-e" 'move-end-of-line)
+
+(define-key evil-normal-state-map "u" 'undo-fu-only-undo)
+(define-key evil-normal-state-map "\C-r" 'undo-fu-only-redo)
+
+(when (eq system-type 'darwin)
+  (keyboard-translate ?\C-h ?\C-?))
+
+(with-eval-after-load "persp-mode"
+  (global-set-key (kbd "C-x b") 'persp-switch-to-buffer)
+  (global-set-key (kbd "C-x k") 'persp-kill-buffer))
+
+;; treesit
+(after! treesit
+  (setq treesit-language-source-alist
+        '((typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src" nil nil)
+          (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src" nil nil)
+          (bash "https://github.com/tree-sitter/tree-sitter-bash")
+          (cmake "https://github.com/uyha/tree-sitter-cmake")
+          (css "https://github.com/tree-sitter/tree-sitter-css")
+          (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+          (go "https://github.com/tree-sitter/tree-sitter-go")
+          (html "https://github.com/tree-sitter/tree-sitter-html")
+          (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+          (json "https://github.com/tree-sitter/tree-sitter-json")
+          (make "https://github.com/alemuller/tree-sitter-make")
+          (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+          (python "https://github.com/tree-sitter/tree-sitter-python")
+          (toml "https://github.com/tree-sitter/tree-sitter-toml")
+          (yaml "https://github.com/ikatyang/tree-sitter-yaml"))))
+
+
+;; lsp
+(with-eval-after-load 'lsp-ui
+  (setq lsp-ui-doc-enable t))
+
+;; (after! lsp-mode
+;;   ;; (setq lsp-clients-typescript-init-opts '(:importModuleSpecifierPreference "non-relative"))
+;;   (lsp-make-interactive-code-action organize-imports-ts "source.organizeImports.ts-ls"))
+
+;; typescript
+(use-package typescript-ts-mode
+  :mode (("\\.ts\\'" . typescript-ts-mode)
+         ("\\.tsx\\'" . tsx-ts-mode))
+  :config
+  (progn
+    (add-hook! '(typescript-ts-mode-hook tsx-ts-mode-hook) #'lsp!)
+    (setq lsp-clients-typescript-prefer-use-project-ts-server t)
+    (setq lsp-eldoc-render-all t)
+    (setq lsp-eslint-auto-fix-on-save t)
+    ;; (setq-local lsp-enabled-clients '(ts-ls eslint))
+    ))
+
+;; (map! :after lsp-mode
+;;       (:map tsx-ts-mode-map
+;;             "C-c C-o" #'lsp-eslint-fix-all)
+;;       (:map typescript-mode-map
+;;             "C-c C-o" #'lsp-eslint-fix-all)
+;;       (:map typescript-ts-mode-map
+;;             "C-c C-o" #'lsp-eslint-fix-all)
+;;       ("C-c C-o" #'lsp-organize-imports))
+
+;; (custom-set-variables
+;;  '(lsp-clients-typescript-init-opts
+;;    '(:importModuleSpecifierEnding "js" :generateReturnInDocTemplate t))
+;;  )
+
+;; (cl-defmethod project-root ((project (head eglot-project)))
+;;   (cdr project))
+
+;; (defun my-project-try-tsconfig-json (dir)
+;;   (when-let* ((found (locate-dominating-file dir "tsconfig.json")))
+;;     (cons 'eglot-project found)))
+
+;; (add-hook 'project-find-functions
+;;           'my-project-try-tsconfig-json nil nil)
+
+;; (add-to-list 'eglot-server-programs
+;;              '((typescript-mode) "typescript-language-server" "--stdio"))
+
+;; (eval-after-load 'typescript-ts-mode
+;;   '(add-hook 'typescript-ts-mode-hook #'add-node-modules-path))
+
+;; (add-hook 'typescript-ts-mode-hook 'eglot-ensure)
+
+;; (defun my/prettier ()
+;;   (interactive)
+;;   (shell-command
+;;    (format "%s --write %s"
+;;            (shell-quote-argument (executable-find "prettier"))
+;;            (shell-quote-argument (expand-file-name buffer-file-name))))
+;;   (revert-buffer t t t))
+;; (add-hook 'typescript-mode-hook
+;;           (lambda ()
+;;             (add-hook 'after-save-hook 'my/prettier t t)))
+;; (add-hook 'typescript-tsx-mode-hook
+;;           (lambda ()
+;;             (add-hook 'after-save-hook 'my/prettier t t)))
+;; (setq typescript-indent-level 2)
+;; (after! lsp-mode
+;;   (add-to-list 'lsp--formatting-indent-alist '(typescript-tsx-mode . typescript-indent-level)))
+
+;; golang
+(with-eval-after-load 'go-ts-mode
+  (setq flycheck-golangci-lint-config "~/.doom.d/golangci-lint/config.yml")
+  (add-hook 'flycheck-mode-hook 'flycheck-golangci-lint-setup)
+  (add-hook 'go-ts-mode-hook #'lsp-deferred)
+  ;; Make sure you don't have other goimports hooks enabled.
+  (defun lsp-go-ts-install-save-hooks ()
+    (add-hook 'before-save-hook #'lsp-organize-imports))
+  (add-hook 'go-ts-mode-hook #'lsp-go-ts-install-save-hooks))
+
+(with-eval-after-load 'go-mode
+  (setq flycheck-golangci-lint-config "~/.doom.d/golangci-lint/config.yml")
+  (add-hook 'flycheck-mode-hook 'flycheck-golangci-lint-setup)
+  (add-hook 'go-mode-hook #'lsp-deferred)
+  ;; Make sure you don't have other goimports hooks enabled.
+  (defun lsp-go-install-save-hooks ()
+    (add-hook 'before-save-hook #'lsp-organize-imports))
+  (add-hook 'go-mode-hook #'lsp-go-install-save-hooks))
+
+
+(with-eval-after-load 'lsp-mode
+  (lsp-register-custom-settings
+   '(("gopls.completeUnimported" t t)
+     ("gopls.staticcheck" t t)
+     ("gopls.codelenses" ((generate . t)
+                          (test . t)
+                          (fill_struct . t)
+                          (references . t)
+                          (extract_function . t)
+                          (extract_variable . t))))))
+
+;; (with-eval-after-load 'lsp-mode
+;;   (lsp-register-custom-settings
+;;    '(("gopls.completeUnimported" t t)
+;;      ("gopls.staticcheck" t t)))
+;;   (setq lsp-go-codelenses '(
+;;                             (gc_details . t)
+;;                             (generate . t)
+;;                             (regenerate_cgo . t)
+;;                             (tidy . :json-false)
+;;                             (upgrade_dependency . :json-false)
+;;                             (test . t)
+;;                             (vendor . t))))
+
+;; python
+(use-package python-black
+  :demand t
+  :after python
+  :config
+  (python-black-on-save-mode))
+
+(with-eval-after-load 'python-mode
+  (require 'lsp-pyright)
+  (require 'python-black)
+  (setq +python-ipython-repl-args '("-i" "--simple-prompt" "--no-color-info"))
+  (setq +python-jupyter-repl-args '("--simple-prompt")))
+
+;; markdown
+(with-eval-after-load 'markdown-mode
+  (setq markdown-preview-stylesheets (list "~/.doom.d/github.css"
+                                           "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/vs.min.css"))
+  (setq markdown-preview--preview-template "~/.doom.d/preview.html"))
+
+;; aspell
+(setq ispell-program-name "aspell")
+(setq ispell-extra-args '("--sug-mode=ultra" "--lang=en_US"))
+
+;; graphql
+(add-hook 'graphql-mode-hook
+          (lambda
+            ()
+            (make-local-variable 'graphql-indent-level)
+            (setq graphql-indent-level 2)))
+
+;; mermaid
+(setq mermaid-flags "~/.doom.d/mermaid_config.json")
+
+;; copilot
+(use-package! copilot
+  :hook (prog-mode . copilot-mode)
+  :bind (:map copilot-completion-map
+              ("<tab>" . 'copilot-accept-completion)
+              ("TAB" . 'copilot-accept-completion)
+              ("C-TAB" . 'copilot-accept-completion-by-word)
+              ("C-<tab>" . 'copilot-accept-completion-by-word)))
+
+
+;; ruby
+(require 'lsp-mode)
+(add-hook 'ruby-mode-hook 'lsp)
+(setq lsp-rubocop-use-bundler t)
+(setq lsp-steep-use-bundler t)
+(setq lsp-solargraph-use-bundler t)
+(setq lsp-ruby-use-bundler t)
+
+(use-package ruby-mode
+  :mode (
+         ("\\.rb\\'" . ruby-mode)
+         ("\\.rake\\'" . ruby-mode)
+         ("\\.gemspec\\'" . ruby-mode)
+         ("\\Steepfile\\'" . ruby-mode)
+         ("\\Gemfile\\'" . ruby-mode)
+         ("\\Rakefile\\'" . ruby-mode)
+         )
+  :config
+  (progn
+    (setq-local lsp-enabled-clients '(ruby-ls solargraph))))
+
+(use-package lsp-mode
+  :hook (ruby-mode .lsp-deferred)
+  :commands (lsp lsp-deferred))
+
+(use-package! whitespace
+  :config
+  (progn
+    (setq whitespace-style '(face tabs tab-mark spaces space-mark trailing lines-tail newline newline-mark))
+    (setq whitespace-display-mappings '(
+                                        (space-mark   ?\     [?\u00B7]     [?.])
+                                        (space-mark   ?\xA0  [?\u00A4]     [?_])
+                                        (newline-mark ?\n    [?¬ ?\n])
+                                        (tab-mark     ?\t    [?\u00BB ?\t] [?\\ ?\t])))))
+
+(setq copilot-indent-offset-warning-disable t)
+
+(add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.json\\'" . json-ts-mode))
+
+(add-hook 'json-ts-mode-hook
+          (lambda ()
+            (make-local-variable 'js-indent-level)
+            (setq js-indent-level 2)))

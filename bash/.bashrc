@@ -33,3 +33,8 @@ command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
 eval "$(pyenv virtualenv-init -)"
+export SWIFT_POST_PROCESS_FILE=/usr/local/bin/swiftformat
+
+if [ -d "$(brew --prefix)/opt/grep/libexec/gnubin" ]; then
+    PATH="$(brew --prefix)/opt/grep/libexec/gnubin:$PATH"
+fi
