@@ -72,9 +72,15 @@ export PATH="$PATH:$GOPATH/bin"
 export PATH="$HOME/.goenv/shims:$PATH"
 
 export PATH="/opt/homebrew/opt/mysql@5.7/bin:$PATH"
+autoload -Uz compinit && compinit
 [[ /usr/local/bin/kubectl ]] && source <(kubectl completion zsh)
 
 if [[ $OSTYPE == darwin* ]]; then
   source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
   source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+fi
+
+# gnubin
+if [ -d "$(brew --prefix)/opt/grep/libexec/gnubin" ]; then
+    PATH="$(brew --prefix)/opt/grep/libexec/gnubin:$PATH"
 fi
