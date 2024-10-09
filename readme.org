@@ -16,11 +16,11 @@ And then, you need to follow the instruction.
 - osx
 
   #+begin_src shell
-./install -o osx -l
+./install.sh -o osx -l
   #+end_src
 
 - archlinux / manjaro linux
 
   #+begin_src shell
-./install -o arch -l
+./install.sh -o arch -l
   #+end_src
