@@ -80,3 +80,4 @@
   :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
 (package! rbs-mode)
 (package! catppuccin-theme)
+(package! k8s-mode)
