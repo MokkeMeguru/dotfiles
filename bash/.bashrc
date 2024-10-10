@@ -31,6 +31,6 @@ alias git-now-hash='git rev-parse HEAD'
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
 
-eval "$(pyenv virtualenv-init -)"
 export SWIFT_POST_PROCESS_FILE=/usr/local/bin/swiftformat
