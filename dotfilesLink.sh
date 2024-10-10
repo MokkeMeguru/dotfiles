@@ -15,6 +15,13 @@ ln -sf $DOTPATH/zsh/.zshrc $HOME/.zshrc
 ln -sf $DOTPATH/bash/.bash_profile $HOME/.zprofile
 ln -sf $HOME/dotfiles/zsh/.zpreztorc $HOME/.zpreztorc
 
+# sheldon
+mkdir -p $HOME/.config/sheldon
+ln -sf $DOTPATH/sheldon/plugins.toml $HOME/.config/sheldon/plugins.toml
+
+# starship
+ln -sf $DOTPATH/starship/starship.toml $HOME/.config/starship.toml
+
 # vim
 ln -snf $DOTPATH/vim/.vimrc $HOME/.vimrc
 ln -snf $DOTPATH/vim/.vimrc.keymap $HOME/.vimrc.keymap

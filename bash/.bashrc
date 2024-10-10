@@ -33,3 +33,4 @@ command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
 eval "$(pyenv virtualenv-init -)"
+export SWIFT_POST_PROCESS_FILE=/usr/local/bin/swiftformat

@@ -1,0 +1,45 @@
+format = """\
+  $directory\
+  $git_branch\
+  $golang\
+  $gcloud\
+  $aws\
+  $kubernetes\
+  $line_break\
+  $character
+"""
+[character]
+error_symbol = "[❯](bold red)"
+success_symbol = "[❯](bold green)"
+
+[directory]
+truncation_length = 48
+truncate_to_repo = false
+truncation_symbol = "…/"
+
+[aws]
+format = '/ [aws ($profile )(\($region\) )]($style)'
+style = "bold blue"
+
+[aws.region_aliases]
+ap-northeast-1 = "jp"
+
+[gcloud]
+format = '/ [gcloud \($project\)]($style) '
+
+[docker_context]
+format = "via [docker $context](blue bold)"
+
+[git_branch]
+format = '/ [git \($branch(:$remote_branch)\)]($style) '
+truncation_length = 64
+truncation_symbol = '...'
+
+[golang]
+disabled = true
+# format = 'via [go ($version )($mod_version )]($style)'
+
+[kubernetes]
+disabled = false
+format = '/ [k8s \($context\)](dimmed green)'
+# https://starship.rs/ja-JP/config/#kubernetes

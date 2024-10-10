@@ -84,3 +84,9 @@ if [ ! -d $HOME/.pyenv ]; then
 	git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 	cd $HOME/.pyenv && src/configure && make -C src
 fi
+
+echo "install sheldon"
+cargo install sheldon --locked
+
+echo "install startship"
+cargo install starship --locked
