@@ -34,7 +34,7 @@ fi
 
 # Install Go
 if ! command -v go &> /dev/null; then
-    GO_VERSION="1.19"
+    GO_VERSION="1.23"
     curl -sLO "https://golang.org/dl/go${GO_VERSION}.linux-amd64.tar.gz"
     sudo tar -C /usr/local -xzf "go${GO_VERSION}.linux-amd64.tar.gz"
     rm "go${GO_VERSION}.linux-amd64.tar.gz"
