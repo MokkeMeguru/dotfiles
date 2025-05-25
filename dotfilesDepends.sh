@@ -24,24 +24,6 @@ if [ ! -e $HOME/.vim/bundle/Vundle.vim ]; then
 	git clone https://github.com/VundleVim/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
 fi
 
-echo "install babashka"
-if !(type "bb" > /dev/null 2>&1); then
-	if [ ! -d $HOME/.bbsk ]; then
-		mkdir $HOME/.bbsk
-	fi
-	curl -sLO https://raw.githubusercontent.com/babashka/babashka/master/install
-	chmod +x install
-	./install $HOME/.bbsk
-fi
-
-echo "install clj-kondo"
-if !(type "clj-kondo" > /dev/null 2>&1); then
-	curl -sLO https://raw.githubusercontent.com/clj-kondo/clj-kondo/master/script/install-clj-kondo
-	chmod +x install-clj-kondo
-	./install-clj-kondo
-	fibreconfig
-fi
-
 echo "install pyenv"
 if [ ! -d $HOME/.pyenv ]; then
 	git clone git://github.com/yyuu/pyenv.git ~/.pyenv
