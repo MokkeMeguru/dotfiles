@@ -13,8 +13,10 @@
 # fi
 
 #!/bin/zsh
-# load bash settings
-source $HOME/.bashrc
+# load shell-agnostic settings
+if [ -f "$HOME/.bash_aliases" ]; then
+    source "$HOME/.bash_aliases"
+fi
 
 # zplug ----------------------------------
 # source "${ZDOTDIR:-$HOME}/.zplug/init.zsh"
