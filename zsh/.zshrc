@@ -55,13 +55,14 @@ source $HOME/.bashrc
 # # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 # [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-eval "$(sheldon source)"
-eval "$(starship init zsh)"
 
 eval "$(direnv hook zsh)"
 
-eval "$(rbenv init -)"
-export PATH="$PATH:$HOME/.rbenv/bin"
+# rust
+export PATH="$HOME/.cargo/bin:$PATH"
+eval "$(sheldon source)"
+eval "$(starship init zsh)"
+
 
 # go
 # export GOENV_ROOT="$HOME/.goenv"
@@ -71,6 +72,11 @@ export PATH="$PATH:$HOME/.rbenv/bin"
 # export PATH="$PATH:$GOPATH/bin"
 # export PATH="$HOME/.goenv/shims:$PATH"
 
+# ruby 
+export PATH="$PATH:$HOME/.rbenv/bin"
+eval "$(rbenv init -)"
+export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
+
 export PATH="/opt/homebrew/opt/mysql@5.7/bin:$PATH"
 autoload -Uz compinit && compinit
 [[ /usr/local/bin/kubectl ]] && source <(kubectl completion zsh)
@@ -78,12 +84,12 @@ autoload -Uz compinit && compinit
 if [[ $OSTYPE == darwin* ]]; then
   source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
   source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+  # gnubin
+  if [ -d "$(brew --prefix)/opt/grep/libexec/gnubin" ]; then
+    PATH="$(brew --prefix)/opt/grep/libexec/gnubin:$PATH"
+  fi
 fi
 
-# gnubin
-if [ -d "$(brew --prefix)/opt/grep/libexec/gnubin" ]; then
-  PATH="$(brew --prefix)/opt/grep/libexec/gnubin:$PATH"
-fi
 
 # swift
 alias clean='rm -rf ~/Library/Developer/Xcode/DerivedData'
