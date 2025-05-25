@@ -1,16 +1,9 @@
 if [ -f ~/.bashrc ]; then
-	source ~/.bashrc
+    source ~/.bashrc
 fi
 
 # emacs
 export PATH="/Applications/MacPorts/Emacs.app/Contents/MacOS:$PATH"
-
-# go
-export GOENV_ROOT="$HOME/.goenv"
-export PATH="$GOENV_ROOT/bin:$PATH"
-eval "$(goenv init -)"
-export PATH="$GOROOT/bin:$PATH"
-export PATH="$PATH:$GOPATH/bin"
 
 # ruby
 export PATH="$HOME/.rbenv/bin:$PATH"

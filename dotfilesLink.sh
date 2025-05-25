@@ -12,6 +12,7 @@ fi
 
 # zsh
 ln -sf $DOTPATH/zsh/.zshrc $HOME/.zshrc
+ln -sf $DOTPATH/zsh/.zshenv $HOME/.zshenv
 ln -sf $DOTPATH/bash/.bash_profile $HOME/.zprofile
 ln -sf $HOME/dotfiles/zsh/.zpreztorc $HOME/.zpreztorc
 

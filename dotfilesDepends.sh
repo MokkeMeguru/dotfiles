@@ -57,10 +57,10 @@ if [ ! -d $HOME/.cargo ]; then
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 fi
 
-echo "install goenv"
-if [ ! -d $HOME/.goenv ]; then
-	git clone https://github.com/syndbg/goenv.git $HOME/.goenv
-fi
+# echo "install goenv"
+# if [ ! -d $HOME/.goenv ]; then
+# 	git clone https://github.com/syndbg/goenv.git $HOME/.goenv
+# fi
 
 echo "install golsp"
 if [ ! -d $HOME/golsp ]; then

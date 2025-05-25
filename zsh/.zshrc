@@ -64,12 +64,12 @@ eval "$(rbenv init -)"
 export PATH="$PATH:$HOME/.rbenv/bin"
 
 # go
-export GOENV_ROOT="$HOME/.goenv"
-export PATH="$GOENV_ROOT/bin:$PATH"
-eval "$(goenv init -)"
-export PATH="$GOROOT/bin:$PATH"
-export PATH="$PATH:$GOPATH/bin"
-export PATH="$HOME/.goenv/shims:$PATH"
+# export GOENV_ROOT="$HOME/.goenv"
+# export PATH="$GOENV_ROOT/bin:$PATH"
+# eval "$(goenv init -)"
+# export PATH="$GOROOT/bin:$PATH"
+# export PATH="$PATH:$GOPATH/bin"
+# export PATH="$HOME/.goenv/shims:$PATH"
 
 export PATH="/opt/homebrew/opt/mysql@5.7/bin:$PATH"
 autoload -Uz compinit && compinit
@@ -82,8 +82,10 @@ fi
 
 # gnubin
 if [ -d "$(brew --prefix)/opt/grep/libexec/gnubin" ]; then
-    PATH="$(brew --prefix)/opt/grep/libexec/gnubin:$PATH"
+  PATH="$(brew --prefix)/opt/grep/libexec/gnubin:$PATH"
 fi
 
 # swift
 alias clean='rm -rf ~/Library/Developer/Xcode/DerivedData'
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

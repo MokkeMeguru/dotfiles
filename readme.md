@@ -1,26 +1,32 @@
-#+TITLE: Dotfiles
+# Dotfiles
 
-* How to use
+## How to use
 
-#+begin_src shell
+``` shell
 cd ~
 git clone https://github.com/MokkeMeguru/dotfiles
 cd dotfiles
 chmod +x install.sh
 ./install.sh --help
-#+end_src
+```
 
 And then, you need to follow the instruction.
 
-* Example
+### Example
+
 - osx
 
-  #+begin_src shell
+``` shell
 ./install.sh -o osx -l
-  #+end_src
+```
 
 - archlinux / manjaro linux
 
-  #+begin_src shell
+``` shell
 ./install.sh -o arch -l
-  #+end_src
+```
+
+## Appendix
+
+- install emacs nerd fonts
+  `M-x nerd-icons-install-fonts`

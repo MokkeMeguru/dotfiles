@@ -29,7 +29,7 @@
 ;; refresh your font settings. If Emacs still can't find your font, it likely
 ;; wasn't installed correctly. Font issues are rarely Doom issues!
 
-(setq doom-font (font-spec :family "HackGen35 Console" :size 14)
+(setq doom-font (font-spec :family "HackGen35 Console NF" :size 14)
       doom-symbol-font (font-spec :family (if IS-MAC "Apple Color Emoji" "JuliaMono")))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
@@ -462,3 +462,5 @@
           (lambda ()
             (make-local-variable 'js-indent-level)
             (setq js-indent-level 2)))
+;; (add-hook 'git-commit-setup-hook 'copilot-chat-insert-commit-message)
+(setq copilot-chat-frontend 'markdown)

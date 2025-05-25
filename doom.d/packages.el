@@ -78,6 +78,7 @@
 (package! add-node-modules-path)
 (package! copilot
   :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
+(package! copilot-chat)
 (package! rbs-mode)
 (package! catppuccin-theme)
 (package! k8s-mode)

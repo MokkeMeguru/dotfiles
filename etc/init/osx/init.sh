@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-brew install git curl vim python3 lsd fzf direnv gh
+brew install git curl vim python3 lsd fzf direnv gh go
 brew tap d12frosted/emacs-plus
 brew install emacs-plus@30
 brew install libtool cmake
