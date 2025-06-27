@@ -4,7 +4,7 @@
 sudo apt update
 
 # Install basic packages
-sudo apt install -y git curl vim python3 build-essential cmake libtool zsh pkg-config libssl-dev libyaml-dev zlib1g-dev
+sudo apt install -y git curl vim python3 build-essential cmake libtool zsh pkg-config libssl-dev libyaml-dev zlib1g-dev lsd
 
 # Install Emacs
 sudo apt install -y emacs
