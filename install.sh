@@ -7,7 +7,7 @@ function usage {
 Usage: $(basename "$0") [OPTION] ...
 please input the argument
     --help/-h  Display help
-    -o VALUE   os [arch, osx]
+    -o VALUE   os [arch, osx, ubuntu]
     -l         load dotfile's bashrc/bash_profile
 EOM
     exit 2
@@ -47,10 +47,10 @@ if [ $no_args == "true" ]; then
     exit 1
 fi
 
-if [ $OS == "arch" ] || [ $OS == "osx" ]; then
+if [ $OS == "arch" ] || [ $OS == "osx" ] || [ $OS == "ubuntu" ]; then
     echo "--os = ${OS}"
 else
-    echo "os is choices from [arch, osx]"
+    echo "os is choices from [arch, osx, ubuntu]"
     exit 1
 fi
 
@@ -64,6 +64,8 @@ if [ "$OS" = "arch" ]; then
     sh $DOTPATH/etc/init/arch/init.sh
 elif [ "$OS" = "osx" ]; then
     sh $DOTPATH/etc/init/osx/init.sh
+elif [ "$OS" = "ubuntu" ]; then
+    sh $DOTPATH/etc/init/ubuntu/init.sh
 fi
 
 OS=${OS} sh $DOTPATH/dotfilesDepends.sh

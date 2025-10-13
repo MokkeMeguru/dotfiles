@@ -10,12 +10,16 @@ eval "$(direnv hook zsh)"
 if [[ $OSTYPE == darwin* ]]; then
   export CPPFLAGS="-I/opt/homebrew/opt/gcc@13/include"
   export PATH="/opt/homebrew/opt/gcc@13/bin:$PATH"
+  export LIBRARY_PATH=$LIBRARY_PATH:$(brew --prefix zstd)/lib/
 fi
 
 # ruby
 eval "$(rbenv init -)"
 export PATH="$PATH:$HOME/.rbenv/bin"
-export LIBRARY_PATH=$LIBRARY_PATH:$(brew --prefix zstd)/lib/
+export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
+
+# rust
+export PATH="$HOME/.cargo/bin:$PATH"
 
 # go
 export GOENV_ROOT="$HOME/.goenv"
@@ -25,13 +29,10 @@ export PATH="$GOROOT/bin:$PATH"
 export PATH="$PATH:$GOPATH/bin"
 export PATH="$HOME/.goenv/shims:$PATH"
 
-function gotools() {
-  go install golang.org/x/tools/gopls@latest
-  go install golang.org/x/tools/cmd/goimports@latest
-}
-
 # mysql
-export PATH="/opt/homebrew/opt/mysql@5.7/bin:$PATH"
+if [[ $OSTYPE == darwin* ]]; then
+  export PATH="/opt/homebrew/opt/mysql@5.7/bin:$PATH"
+fi
 
 # completion
 autoload -Uz compinit && compinit
@@ -41,11 +42,10 @@ autoload -Uz compinit && compinit
 if [[ $OSTYPE == darwin* ]]; then
   source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
   source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
-fi
-
-# gnubin
-if [ -d "$(brew --prefix)/opt/grep/libexec/gnubin" ]; then
-  PATH="$(brew --prefix)/opt/grep/libexec/gnubin:$PATH"
+  # gnubin
+  if [ -d "$(brew --prefix)/opt/grep/libexec/gnubin" ]; then
+    PATH="$(brew --prefix)/opt/grep/libexec/gnubin:$PATH"
+  fi
 fi
 
 # swift

@@ -15,13 +15,13 @@ alias more=less
 alias bb="$HOME/.bbsk/bb"
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
-export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
 export PATH="$PATH:$GEM_HOME/bin"
 
 bindkey "^[[H" beginning-of-line
 bindkey "^[[F" end-of-line
 bindkey "^[[3~" delete-char
-# alias pbcopy='xsel --clipboard --input'
+
+alias pbcopy='xsel --clipboard --input'
 export PATH="$HOME/.local/bin:$PATH"
 
 alias local-permission='find ./ -user root -type d -print | sudo xargs chown meguru:meguru'
