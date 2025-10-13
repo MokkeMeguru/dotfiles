@@ -5,9 +5,9 @@ OS=${OS:-"arch"}
 
 # bash
 if [ "$LOAD_BASH" = "true" ]; then
-    echo "Sync bash settings"
-    ln -sf $DOTPATH/bash/.bashrc $HOME/.bashrc
-    ln -sf $DOTPATH/bash/.bash_profile $HOME/.bash_profile
+  echo "Sync bash settings"
+  ln -sf $DOTPATH/bash/.bashrc $HOME/.bashrc
+  ln -sf $DOTPATH/bash/.bash_profile $HOME/.bash_profile
 fi
 
 # zsh
@@ -19,6 +19,10 @@ ln -sf $HOME/dotfiles/zsh/.zpreztorc $HOME/.zpreztorc
 # sheldon
 mkdir -p $HOME/.config/sheldon
 ln -sf $DOTPATH/sheldon/plugins.toml $HOME/.config/sheldon/plugins.toml
+
+# wezterm
+mkdir -p $HOME/.config/wezterm
+ln -sf $DOTPATH/wezterm/wezterm.lua $HOME/.config/wezterm/wezterm.lua
 
 # starship
 ln -sf $DOTPATH/starship/starship.toml $HOME/.config/starship.toml

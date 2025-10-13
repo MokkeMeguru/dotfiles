@@ -2,3 +2,4 @@
 *.zip
 doom.d/custom.el
 .DS_Store
+.envrc

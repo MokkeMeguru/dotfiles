@@ -201,7 +201,6 @@
 (all-the-icons-ivy-rich-mode)
 
 (defun set-alpha (alpha-num)
-  `set frame parameter 'alpha`
   (interactive "nAlpha: ")
   (set-frame-parameter nil 'alpha (cons alpha-num '(90))))
 
@@ -258,7 +257,8 @@
           (markdown "https://github.com/ikatyang/tree-sitter-markdown")
           (python "https://github.com/tree-sitter/tree-sitter-python")
           (toml "https://github.com/tree-sitter/tree-sitter-toml")
-          (yaml "https://github.com/ikatyang/tree-sitter-yaml"))))
+          (yaml "https://github.com/ikatyang/tree-sitter-yaml")
+          (php "https://github.com/tree-sitter/tree-sitter-php" "master" "php/src"))))
 
 
 ;; lsp
@@ -388,6 +388,9 @@
   (setq +python-ipython-repl-args '("-i" "--simple-prompt" "--no-color-info"))
   (setq +python-jupyter-repl-args '("--simple-prompt")))
 
+(use-package uv-mode
+  :hook (python-mode . uv-mode-auto-activate-hook))
+
 ;; markdown
 (with-eval-after-load 'markdown-mode
   (setq markdown-preview-stylesheets (list "~/.doom.d/github.css"
@@ -416,7 +419,6 @@
               ("TAB" . 'copilot-accept-completion)
               ("C-TAB" . 'copilot-accept-completion-by-word)
               ("C-<tab>" . 'copilot-accept-completion-by-word)))
-
 
 ;; ruby
 (require 'lsp-mode)
@@ -464,3 +466,22 @@
             (setq js-indent-level 2)))
 ;; (add-hook 'git-commit-setup-hook 'copilot-chat-insert-commit-message)
 (setq copilot-chat-frontend 'markdown)
+
+(use-package yaml-ts-mode
+  :mode (("\\.ya?ml\\'" . yaml-ts-mode)
+         ("\\.yml\\'" . yaml-ts-mode))
+  :config
+  (setq yaml-indent-offset 2)
+  (add-hook 'yaml-ts-mode-hook #'lsp-deferred)
+  (add-hook 'yaml-ts-mode-hook #'outline-indent-minor-mode))
+
+;; pbcopy/pbpasteが利用できる場合、クリップボード連携関数を上書きする
+(when (executable-find "pbcopy")
+  (setq interprogram-cut-function
+        (lambda (text)
+          (with-temp-buffer
+            (insert text)
+            (call-process-region (point-min) (point-max) "pbcopy" nil 0 nil))))
+  (setq interprogram-paste-function
+        (lambda ()
+          (call-process "pbpaste" nil t nil))))

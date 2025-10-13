@@ -77,8 +77,23 @@
 (package! lsp-tailwindcss :recipe (:host github :repo "merrickluo/lsp-tailwindcss"))
 (package! add-node-modules-path)
 (package! copilot
-  :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
+  :recipe (:host github :repo "MokkeMeguru/copilot.el" :files ("*.el" "dist")))
 (package! copilot-chat)
 (package! rbs-mode)
 (package! catppuccin-theme)
 (package! k8s-mode)
+
+(package! ws-butler
+  :recipe (:host github
+           :repo "emacsmirror/nongnu_elpa"
+           :branch "elpa/ws-butler"
+           :local-repo "ws-butler")
+  :pin "9ee5a7657a22e836618813c2e2b64a548d27d2ff")
+
+(package! websocket)
+(package! eat)
+(package! transient)
+
+(package! outline-indent)
+(package! jsonnet-mode)
+(package! uv-mode)
