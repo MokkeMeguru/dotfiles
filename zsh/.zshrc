@@ -28,6 +28,10 @@ eval "$(goenv init -)"
 export PATH="$GOROOT/bin:$PATH"
 export PATH="$PATH:$GOPATH/bin"
 export PATH="$HOME/.goenv/shims:$PATH"
+function gotools() {
+  go install golang.org/x/tools/gopls@latest
+  go install golang.org/x/tools/cmd/goimports@latest
+}
 
 # mysql
 if [[ $OSTYPE == darwin* ]]; then
