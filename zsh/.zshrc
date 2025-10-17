@@ -73,4 +73,6 @@ function githubmcp() {
 }
 
 # 1password
-source $HOME/.config/op/plugins.sh
+if command -v op &> /dev/null; then
+  source $HOME/.config/op/plugins.sh
+fi

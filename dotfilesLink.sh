@@ -43,3 +43,6 @@ ln -snf $DOTPATH/textlint/.textlintrc.json $HOME/.textlintrc.json
 
 # tmux
 ln -snf $DOTPATH/tmux/.tmux.conf $HOME/.tmux.conf
+
+# 1password
+ln -snf $DOTPATH/op/plugins.sh $HOME/.config/op/plugins.sh
