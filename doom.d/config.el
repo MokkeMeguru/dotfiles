@@ -476,12 +476,12 @@
   (add-hook 'yaml-ts-mode-hook #'outline-indent-minor-mode))
 
 ;; pbcopy/pbpasteが利用できる場合、クリップボード連携関数を上書きする
-(when (executable-find "pbcopy")
-  (setq interprogram-cut-function
-        (lambda (text)
-          (with-temp-buffer
-            (insert text)
-            (call-process-region (point-min) (point-max) "pbcopy" nil 0 nil))))
-  (setq interprogram-paste-function
-        (lambda ()
-          (call-process "pbpaste" nil t nil))))
+;; (when (executable-find "pbcopy")
+;;   (setq interprogram-cut-function
+;;         (lambda (text)
+;;           (with-temp-buffer
+;;             (insert text)
+;;             (call-process-region (point-min) (point-max) "pbcopy" nil 0 nil))))
+;;   (setq interprogram-paste-function
+;;         (lambda ()
+;;           (call-process "pbpaste" nil t nil))))
