@@ -40,3 +40,6 @@ ln -snf $DOTPATH/p10k/.p10k.zsh $HOME/.p10k.zsh
 
 # textlint
 ln -snf $DOTPATH/textlint/.textlintrc.json $HOME/.textlintrc.json
+
+# tmux
+ln -snf $DOTPATH/tmux/.tmux.conf $HOME/.tmux.conf

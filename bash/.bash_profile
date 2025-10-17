@@ -36,4 +36,4 @@ export PATH="$HOME/Github/graalvm-ce-java16-21.1.0/bin:$PATH"
 export PGROOT="/var/lib/postgres"
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+if [ -f "/opt/homebrew/bin/brew" ]; then eval "$(/opt/homebrew/bin/brew shellenv)" ]; fi
