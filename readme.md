@@ -16,13 +16,13 @@ And then, you need to follow the instruction.
 
 - osx
 
-``` shell
+```shell
 ./install.sh -o osx -l
 ```
 
 - archlinux / manjaro linux
 
-``` shell
+```shell
 ./install.sh -o arch -l
 ```
 
