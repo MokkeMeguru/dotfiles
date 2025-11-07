@@ -2,7 +2,7 @@
 
 ## How to use
 
-``` shell
+```shell
 cd ~
 git clone https://github.com/MokkeMeguru/dotfiles
 cd dotfiles
